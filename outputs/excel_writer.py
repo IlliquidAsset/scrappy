@@ -24,25 +24,21 @@ def write_to_excel(data, filename):
     ]
     sheet.append(headers)
 
-    # Populate rows with scraped data
+    # Map keys in `data` to column headers for alignment
     for row_index, item in enumerate(data, start=2):  # Start at the second row
-        # Append the row data
-        sheet.append([
-            item.get("Input Name", ""),
-            item.get("Matched Name", ""),
-            item.get("Address", ""),
-            item.get("Account", ""),
-            item.get("Year", ""),
-            item.get("Parcel", ""),
-            _convert_to_number(item.get("Improvement Value", "")),
-            _convert_to_number(item.get("Land Value", "")),
-            _convert_to_number(item.get("Personal Property Value", "")),
-            f"{_convert_to_number(item.get('Assessment Rate', ''))}%",  # Keep as percentage
-            f"{_convert_to_number(item.get('Tax Rate', ''))}",  # Tax rate as decimal
+        row = [
+            item.get(header, "") for header in headers[:-3]
+        ]
+
+        # Insert placeholders for formulas in the last 3 columns
+        row.extend([
             None,  # Placeholder for Total Value formula
             None,  # Placeholder for Assessed Value formula
-            None,  # Placeholder for Tax formula
+            None   # Placeholder for Tax formula
         ])
+
+        # Append the row data
+        sheet.append(row)
 
         # Insert formulas for Total Value, Assessed Value, and Tax
         sheet[f"L{row_index}"] = f"=G{row_index}+H{row_index}"  # Total Value

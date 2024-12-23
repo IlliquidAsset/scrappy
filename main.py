@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 
 # Ensure `scrappy` is in the Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -11,14 +12,7 @@ from scrapers.property_scraper import scrape_property_data
 from scrapers.detail_scraper import scrape_details
 from outputs.excel_writer import write_to_excel
 from utils.logger import log_errors
-
-
-from scrapers.property_scraper import scrape_property_data
-from scrapers.detail_scraper import scrape_details
-from outputs.excel_writer import write_to_excel
-from utils.logger import log_errors
 import requests
-
 
 # Define the output folder structure
 OUTPUT_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outputs")
@@ -26,7 +20,27 @@ PDF_FOLDER = os.path.join(OUTPUT_FOLDER, "pdfs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 os.makedirs(PDF_FOLDER, exist_ok=True)
 
-# Function to download PDFs
+def ask_confirmation(match, current_owner):
+    """Emit confirmation to ScrapFlask and wait for a response."""
+    external_mode = os.getenv("SCRAPPY_EXTERNAL_CONFIRMATION", "false").lower() == "true"
+    if external_mode:
+        print(json.dumps({
+            "confirmation_required": True,
+            "owner": current_owner,
+            "match": match
+        }))
+        confirmation = os.getenv("SCRAPPY_CONFIRMATION")
+        if confirmation in ["yes", "no"]:
+            return confirmation == "yes"
+        else:
+            raise ValueError("Invalid or missing confirmation response.")
+
+    # Fallback for CLI use
+    while True:
+        response = input(f"Does '{current_owner}' match '{match}'? (y/n): ").strip().lower()
+        if response in ["y", "n"]:
+            return response == "y"
+
 def download_pdf(link, output_folder, filename):
     if not link:
         print(f"Invalid PDF link for {filename}. Skipping.")
@@ -45,11 +59,12 @@ def download_pdf(link, output_folder, filename):
     except Exception as e:
         print(f"Error downloading PDF for {filename}: {e}")
 
-# Function to get user input
 def get_user_input():
+    env_owners = os.environ.get("SCRAPPY_OWNERS")
+    if env_owners:
+        return env_owners.split(";")
     return input("Enter owner names (semicolon-separated): ").split(";")
 
-# Main execution
 def main():
     # Step 1: Get user input
     input_names = [name.strip() for name in get_user_input() if name.strip()]
@@ -73,6 +88,17 @@ def main():
     # Step 5: Log errors (if any)
     error_log_path = os.path.join(OUTPUT_FOLDER, "errors.log")
     log_errors(property_data, error_log_path)
+
+    # Step 6: Return data as JSON
+    output_data = {
+        "excel_file": excel_file_path,
+        "pdf_folder": PDF_FOLDER,
+        "property_data": property_data,
+        "errors": []  # Assuming log_errors appends to the errors list in `property_data`
+    }
+
+    # Print the JSON for integration with ScrapFlask
+    print(json.dumps(output_data))
 
     # Completion message
     print(f"Data written to {excel_file_path}")
