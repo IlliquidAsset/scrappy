@@ -25,18 +25,8 @@ def write_to_excel(data, filename):
     sheet.append(headers)
 
     # Populate rows with scraped data
-    for item in data:
-        # Clean and convert the numeric values
-        improvement_value = _convert_to_number(item.get("Improvement Value", ""))
-        land_value = _convert_to_number(item.get("Land Value", ""))
-        personal_property_value = _convert_to_number(item.get("Personal Property Value", ""))
-        assessment_rate = _convert_to_number(item.get("Assessment Rate", ""))
-        tax_rate = _convert_to_number(item.get("Tax Rate", ""))
-        total_value = improvement_value + land_value
-        assessed_value = total_value * (assessment_rate / 100 if assessment_rate else 0)
-        tax = assessed_value * (tax_rate / 100 if tax_rate else 0)
-
-        # Append the row
+    for row_index, item in enumerate(data, start=2):  # Start at the second row
+        # Append the row data
         sheet.append([
             item.get("Input Name", ""),
             item.get("Matched Name", ""),
@@ -44,15 +34,21 @@ def write_to_excel(data, filename):
             item.get("Account", ""),
             item.get("Year", ""),
             item.get("Parcel", ""),
-            improvement_value,
-            land_value,
-            personal_property_value,
-            f"{assessment_rate}%",  # Keep it formatted as a percentage
-            f"{tax_rate}",  # Tax rate as a decimal
-            total_value,
-            assessed_value,
-            tax,
+            _convert_to_number(item.get("Improvement Value", "")),
+            _convert_to_number(item.get("Land Value", "")),
+            _convert_to_number(item.get("Personal Property Value", "")),
+            f"{_convert_to_number(item.get('Assessment Rate', ''))}%",  # Keep as percentage
+            f"{_convert_to_number(item.get('Tax Rate', ''))}",  # Tax rate as decimal
+            None,  # Placeholder for Total Value formula
+            None,  # Placeholder for Assessed Value formula
+            None,  # Placeholder for Tax formula
         ])
+
+        # Insert formulas for Total Value, Assessed Value, and Tax
+        sheet[f"L{row_index}"] = f"=G{row_index}+H{row_index}"  # Total Value
+        sheet[f"M{row_index}"] = f"=L{row_index}*(J{row_index})"  # Assessed Value
+        sheet[f"N{row_index}"] = f"=M{row_index}*(K{row_index}/100)"  # Tax
 
     wb.save(filename)
     print(f"Data written to {filename}")
+
