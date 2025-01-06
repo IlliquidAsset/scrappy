@@ -3,7 +3,7 @@ import sys
 import json
 import requests
 from termcolor import colored
-from locales import SUPPORTED_LOCALES
+from scrappy.locales import SUPPORTED_LOCALES
 
 # Ensure `scrappy` is in the Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
