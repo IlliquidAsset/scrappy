@@ -3,8 +3,9 @@ import sys
 import json
 import requests
 from termcolor import colored
-sys.path.insert(0,os.path.dirname(os.path.abspath(_file_)))
-from locales import SUPPORTED_LOCALES
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from scrappy.locales import SUPPORTED_LOCALES
 
 # Ensure `scrappy` is in the Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
