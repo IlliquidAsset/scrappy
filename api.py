@@ -29,7 +29,7 @@ async def scrape(request: ScrapeRequest):
     
     try:
         # Run scrappy_main asynchronously
-        await asyncio.to_event_loop().run_in_executor(None, scrappy_main)
+        await asyncio.get_event_loop().run_in_executor(None, scrappy_main)
         return {"status": "success", "session_id": request.session_id}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
