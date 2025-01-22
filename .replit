@@ -1,5 +1,5 @@
 
-modules = ["web", "python-3.12"]
+modules = ["python-3.12:v3-20240201-3f4725c"]
 run = "python api.py"
 
 [nix]
