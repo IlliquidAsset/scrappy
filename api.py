@@ -7,7 +7,21 @@ from typing import List
 import uvicorn
 from main import main as scrappy_main
 
-app = FastAPI()
+app = FastAPI(
+    title="Scrappy API",
+    description="API for property tax data scraping"
+)
+
+@app.get("/")
+async def root():
+    return {
+        "endpoints": {
+            "POST /scrape": "Start scraping with provided parameters",
+            "POST /confirm": "Confirm property match",
+            "GET /files/{session_id}": "Get list of PDFs for a session",
+            "GET /locales": "Get list of supported locales"
+        }
+    }
 
 class ScrapeRequest(BaseModel):
     session_id: str
