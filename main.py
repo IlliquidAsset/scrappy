@@ -78,21 +78,13 @@ def get_user_input():
     return env_owners.split(";") if env_owners else input("Enter owner names (semicolon-separated): ").split(";")
 
 def select_locale():
-    """Prompt the user to select a locale."""
+    """Get locale from environment variable or use default."""
     locales = {index + 1: locale for index, locale in enumerate(SUPPORTED_LOCALES)}
-    colors = ["green", "blue", "red", "cyan", "magenta"]
-
-    print("Select a locale:")
-    for num, loc in locales.items():
-        color = colors[(num - 1) % len(colors)]
-        print(f"{colored(num, color)}. {colored(SUPPORTED_LOCALES[loc]['name'], color)}")
-
-    while True:
-        try:
-            locale_choice = int(input("Search by Locale (" + ", ".join([colored(str(num), colors[(num - 1) % len(colors)]) for num in locales]) + "): "))
-            return locales.get(locale_choice)
-        except ValueError:
-            print(colored("Invalid input. Please enter a valid number.", "red"))
+    try:
+        locale_choice = int(os.getenv("SCRAPPY_LOCALE_CHOICE", "1"))
+        return locales.get(locale_choice, "davidson-tn")
+    except ValueError:
+        return "davidson-tn"
 
 def format_cli_output(property_data, errors, excel_file_path, error_log_path):
     """Format and display the CLI output for readability."""
