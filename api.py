@@ -36,10 +36,13 @@ class ConfirmationRequest(BaseModel):
 @app.post("/scrape")
 async def scrape(request: ScrapeRequest):
     try:
+        if request.locale not in SUPPORTED_LOCALES:
+            raise HTTPException(status_code=400, detail="Unsupported locale")
+            
         os.environ["SCRAPPY_SESSION_ID"] = request.session_id
         os.environ["SCRAPPY_EXTERNAL_CONFIRMATION"] = "true"
         os.environ["SCRAPPY_OWNERS"] = request.owners
-        os.environ["SCRAPPY_LOCALE_CHOICE"] = "1"  # davidson-tn is choice 1
+        os.environ["SCRAPPY_LOCALE"] = request.locale
         os.environ["TAX_YEAR"] = request.tax_year
         
         # Run scrappy_main asynchronously

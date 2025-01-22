@@ -79,12 +79,7 @@ def get_user_input():
 
 def select_locale():
     """Get locale from environment variable or use default."""
-    locales = {index + 1: locale for index, locale in enumerate(SUPPORTED_LOCALES)}
-    try:
-        locale_choice = int(os.getenv("SCRAPPY_LOCALE_CHOICE", "1"))
-        return locales.get(locale_choice, "davidson-tn")
-    except ValueError:
-        return "davidson-tn"
+    return os.getenv("SCRAPPY_LOCALE", "davidson-tn")
 
 def format_cli_output(property_data, errors, excel_file_path, error_log_path):
     """Format and display the CLI output for readability."""
