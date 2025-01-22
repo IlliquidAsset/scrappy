@@ -21,17 +21,19 @@ class ConfirmationRequest(BaseModel):
 
 @app.post("/scrape")
 async def scrape(request: ScrapeRequest):
-    os.environ["SCRAPPY_SESSION_ID"] = request.session_id
-    os.environ["SCRAPPY_EXTERNAL_CONFIRMATION"] = "true"
-    os.environ["SCRAPPY_OWNERS"] = request.owners
-    os.environ["SCRAPPY_LOCALE_CHOICE"] = "1"  # davidson-tn is choice 1
-    os.environ["TAX_YEAR"] = request.tax_year
-    
     try:
+        os.environ["SCRAPPY_SESSION_ID"] = request.session_id
+        os.environ["SCRAPPY_EXTERNAL_CONFIRMATION"] = "true"
+        os.environ["SCRAPPY_OWNERS"] = request.owners
+        os.environ["SCRAPPY_LOCALE_CHOICE"] = "1"  # davidson-tn is choice 1
+        os.environ["TAX_YEAR"] = request.tax_year
+        
         # Run scrappy_main asynchronously
         await asyncio.get_event_loop().run_in_executor(None, scrappy_main)
         return {"status": "success", "session_id": request.session_id}
     except Exception as e:
+        if "EOF" in str(e):
+            raise HTTPException(status_code=400, detail="Invalid request body format")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/confirm")
