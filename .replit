@@ -1,8 +1,9 @@
+
 modules = ["web", "python-3.12"]
-run = "run"
+run = "python main.py"
 
 [nix]
 channel = "stable-24_05"
 
 [deployment]
-run = ["sh", "-c", "run"]
+run = ["sh", "-c", "python main.py"]
