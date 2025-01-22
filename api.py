@@ -45,6 +45,11 @@ async def get_files(session_id: str):
     files = os.listdir(pdf_path)
     return {"files": files}
 
+@app.get("/locales")
+async def get_locales():
+    from locales import SUPPORTED_LOCALES
+    return {"locales": SUPPORTED_LOCALES}
+
 if __name__ == "__main__":
     port = int(os.getenv('PORT', 8080))
     uvicorn.run(app, host="0.0.0.0", port=port)
