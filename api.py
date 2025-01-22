@@ -1,5 +1,5 @@
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body
 from pydantic import BaseModel
 import os
 import asyncio
@@ -34,8 +34,11 @@ class ConfirmationRequest(BaseModel):
     confirmation: str
 
 @app.post("/scrape")
-async def scrape(request: ScrapeRequest):
+async def scrape(request: ScrapeRequest = Body(...)):
     try:
+        if not request:
+            raise HTTPException(status_code=400, detail="Request body is required")
+            
         if request.locale not in SUPPORTED_LOCALES:
             raise HTTPException(status_code=400, detail="Unsupported locale")
             
