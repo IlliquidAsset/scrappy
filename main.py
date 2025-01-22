@@ -20,10 +20,19 @@ except ModuleNotFoundError as e:
     print(colored(f"Error: {e}. Ensure Scrappy's folder structure is intact.", "red"))
     sys.exit(1)
 
-# Define the output folder structure
-OUTPUT_FOLDER = os.path.join(current_dir, "outputs")
-PDF_FOLDER = os.path.join(OUTPUT_FOLDER, "pdfs")
-os.makedirs(PDF_FOLDER, exist_ok=True)
+# Define the output folder structure with session management
+def get_session_folders(session_id=None):
+    OUTPUT_FOLDER = os.path.join(current_dir, "outputs")
+    if session_id:
+        session_folder = os.path.join(OUTPUT_FOLDER, session_id)
+        PDF_FOLDER = os.path.join(session_folder, "pdfs")
+        os.makedirs(PDF_FOLDER, exist_ok=True)
+        return session_folder, PDF_FOLDER
+    return OUTPUT_FOLDER, os.path.join(OUTPUT_FOLDER, "pdfs")
+
+# Get session ID from environment or generate default
+SESSION_ID = os.getenv("SCRAPPY_SESSION_ID", "default")
+OUTPUT_FOLDER, PDF_FOLDER = get_session_folders(SESSION_ID)
 
 def ask_confirmation(match, current_owner):
     """Emit confirmation to ScrapFlask and wait for a response."""
