@@ -4,3 +4,6 @@ requests
 termcolor
 rapidfuzz
 colorama
+fastapi
+pydantic
+uvicorn
