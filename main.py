@@ -114,8 +114,9 @@ def format_cli_output(property_data, errors, excel_file_path, error_log_path):
 
 def main():
     locale = select_locale()
-    tax_year = input("Enter the tax year (default: 2024): ").strip() or "2024"
-    input_names = [name.strip() for name in get_user_input() if name.strip()]
+    tax_year = os.getenv("TAX_YEAR", "2024")
+    input_names = os.getenv("SCRAPPY_OWNERS", "").split(";") if os.getenv("SCRAPPY_OWNERS") else []
+    input_names = [name.strip() for name in input_names if name.strip()]
 
     errors = []
     property_data = scrape_property_data(input_names, locale=locale, tax_year=tax_year)
