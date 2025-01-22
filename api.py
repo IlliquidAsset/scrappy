@@ -24,6 +24,8 @@ async def scrape(request: ScrapeRequest):
     os.environ["SCRAPPY_SESSION_ID"] = request.session_id
     os.environ["SCRAPPY_EXTERNAL_CONFIRMATION"] = "true"
     os.environ["SCRAPPY_OWNERS"] = request.owners
+    os.environ["SCRAPPY_LOCALE_CHOICE"] = "1"  # davidson-tn is choice 1
+    os.environ["TAX_YEAR"] = request.tax_year
     
     try:
         # Run scrappy_main asynchronously
