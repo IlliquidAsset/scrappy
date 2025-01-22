@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, Body
 from pydantic import BaseModel
 import os
 import asyncio
+from locales import SUPPORTED_LOCALES
 from typing import List
 import uvicorn
 from main import main as scrappy_main
