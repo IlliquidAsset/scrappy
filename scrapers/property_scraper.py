@@ -5,8 +5,11 @@ from utils.normalizer import normalize_text
 from termcolor import colored
 from locales import SUPPORTED_LOCALES  
 
+# In property_scraper.py, modify the confirm_match function:
 def confirm_match(input_name, matched_name, confirmed_matches, threshold=80):
     """Confirm if the matched name is correct based on the input name."""
+    from main import ask_confirmation  # Import the API-aware confirmation function
+    
     normalized_input = normalize_text(input_name)
     normalized_matched = normalize_text(matched_name)
 
@@ -14,10 +17,9 @@ def confirm_match(input_name, matched_name, confirmed_matches, threshold=80):
         return True
 
     if partial_ratio(normalized_input, normalized_matched) >= threshold:
-        return confirm_user_input(input_name, matched_name, confirmed_matches)
+        return ask_confirmation(matched_name, input_name)  # Use the API-aware function
     
     return False
-
 def confirm_user_input(input_name, matched_name, confirmed_matches):
     """Prompt the user to confirm the match."""
     if matched_name not in confirmed_matches:
@@ -62,9 +64,14 @@ def scrape_owner_data(session, owner_name, base_url, tax_year, confirmed_matches
             "page": page
         }
 
-        print(f"Searching for owner: {owner_name}, Page: {page}")
+        print(f"Debug: TARGET URL: {base_url}")
+        print(f"Debug: PAYLOAD: {payload}")
         try:
+            print("Debug: Sending request...")
             response = session.post(base_url, data=payload)
+            print(f"Debug: Response Status: {response.status_code}")
+            print(f"Debug: Response Headers: {dict(response.headers)}")
+            
             if not handle_response(response, owner_name, page):
                 break
 
