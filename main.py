@@ -35,16 +35,17 @@ SESSION_ID = os.getenv("SCRAPPY_SESSION_ID", "default")
 OUTPUT_FOLDER, PDF_FOLDER = get_session_folders(SESSION_ID)
 
 def ask_confirmation(match, current_owner):
-    """Emit confirmation to ScrapFlask and wait for a response."""
+    """Handle confirmation in both API and CLI contexts."""
     external_mode = os.getenv("SCRAPPY_EXTERNAL_CONFIRMATION", "false").lower() == "true"
     if external_mode:
-        print(json.dumps({
-            "confirmation_required": True,
+        # Return a structured response for API
+        response = {
+            "status": "confirmation_required",
             "owner": current_owner,
             "match": match
-        }))
-        confirmation = os.getenv("SCRAPPY_CONFIRMATION")
-        return confirmation == "yes" if confirmation in ["yes", "no"] else False
+        }
+        print(json.dumps(response))
+        return False  # Default to false, requiring explicit confirmation via /confirm endpoint
     return confirm_cli(current_owner, match)
 
 def confirm_cli(current_owner, match):
