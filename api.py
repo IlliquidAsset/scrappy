@@ -55,7 +55,9 @@ async def scrape(request: ScrapeRequest = Body(...)):
     except Exception as e:
         if "EOF" in str(e):
             raise HTTPException(status_code=400, detail="Invalid request body format")
-        raise HTTPException(status_code=500, detail=str(e))
+        if "validation error" in str(e).lower():
+            raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
 @app.post("/confirm")
 async def confirm(request: ConfirmationRequest):
