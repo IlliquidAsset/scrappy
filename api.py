@@ -37,7 +37,7 @@ class ConfirmationRequest(BaseModel):
     confirmation: str
 
 @app.post("/scrape")
-async def scrape(request: ScrapeRequest = Body(...)):
+async def scrape(request: ScrapeRequest):
     try:
         if not request:
             raise HTTPException(status_code=400, detail=f"[{VERSION}] Request body is required")
