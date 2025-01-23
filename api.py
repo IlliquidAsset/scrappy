@@ -29,6 +29,15 @@ async def root():
         }
     }
 
+@app.get("/locales")
+async def get_locales():
+    return {
+        "locales": {
+            locale: data["name"] 
+            for locale, data in SUPPORTED_LOCALES.items()
+        }
+    }
+
 class ScrapeRequest(BaseModel):
     session_id: str
     owners: str
