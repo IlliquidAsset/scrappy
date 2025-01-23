@@ -35,13 +35,11 @@ class ConfirmationRequest(BaseModel):
     confirmation: str
 
 @app.post("/scrape")
-async def scrape(request: ScrapeRequest = Body(..., example={
-    "session_id": "test1",
-    "owners": "101 Hart ln",
-    "locale": "davidson-tn",
-    "tax_year": "2024"
-})):
+async def scrape(request: ScrapeRequest = Body(...)):
     try:
+        if not request:
+            raise HTTPException(status_code=400, detail="Request body is required")
+        
         if request.locale not in SUPPORTED_LOCALES:
             raise HTTPException(status_code=400, detail="Unsupported locale")
             
