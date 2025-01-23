@@ -4,6 +4,8 @@ from pydantic import BaseModel
 import os
 import asyncio
 from locales import SUPPORTED_LOCALES
+
+VERSION = "v0.01"
 from typing import List
 import uvicorn
 from main import main as scrappy_main
@@ -38,7 +40,14 @@ class ConfirmationRequest(BaseModel):
 async def scrape(request: ScrapeRequest = Body(...)):
     try:
         if not request:
-            raise HTTPException(status_code=400, detail="Request body is required")
+            raise HTTPException(status_code=400, detail=f"[{VERSION}] Request body is required")
+        
+        # Validate request fields
+        if not request.session_id or not request.owners or not request.locale:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"[{VERSION}] All fields (session_id, owners, locale) are required"
+            )
         
         if request.locale not in SUPPORTED_LOCALES:
             raise HTTPException(status_code=400, detail="Unsupported locale")
@@ -53,11 +62,12 @@ async def scrape(request: ScrapeRequest = Body(...)):
         await asyncio.get_event_loop().run_in_executor(None, scrappy_main)
         return {"status": "success", "session_id": request.session_id}
     except Exception as e:
+        error_prefix = f"[{VERSION}] "
         if "EOF" in str(e):
-            raise HTTPException(status_code=400, detail="Invalid request body format")
+            raise HTTPException(status_code=400, detail=f"{error_prefix}Invalid request body format: {str(e)}")
         if "validation error" in str(e).lower():
-            raise HTTPException(status_code=400, detail=str(e))
-        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
+            raise HTTPException(status_code=400, detail=f"{error_prefix}{str(e)}")
+        raise HTTPException(status_code=500, detail=f"{error_prefix}Server error: {str(e)}")
 
 @app.post("/confirm")
 async def confirm(request: ConfirmationRequest):
