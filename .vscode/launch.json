@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Scrappy API",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/scrappy/api.py",
+            "cwd": "${workspaceFolder}/scrappy",
+            "env": {
+                "PORT": "8080"
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "ScrapFlask Frontend",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/scrappyflask/scrapflask/app.py",
+            "cwd": "${workspaceFolder}/scrappyflask",
+            "env": {
+                "FLASK_ENV": "development",
+                "SCRAPPY_API_URL": "http://localhost:8080"
+            },
+            "console": "integratedTerminal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack",
+            "configurations": ["Scrappy API", "ScrapFlask Frontend"]
+        }
+    ]
+}

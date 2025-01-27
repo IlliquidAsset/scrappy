@@ -1,0 +1,13 @@
+flask
+flask-cors
+flask-sqlalchemy
+requests
+termcolor
+python-dotenv
+psycopg2-binary
+beautifulsoup4
+rapidfuzz
+colorama
+fastapi
+pydantic
+uvicorn
