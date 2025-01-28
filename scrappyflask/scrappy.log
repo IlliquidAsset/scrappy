@@ -1,0 +1,1358 @@
+2025-01-20 16:29:25,070 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:29:25,070 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:29:25,103 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:29:25,103 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:29:25,106 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=101+Hart+Ln&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f31d813c210>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:29:25,107 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=Hermitage+1&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f31d8154c50>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:30:07,804 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:30:07,804 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:30:07,837 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=101+Hart+Ln&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f31d8131990>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:31:43,029 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:31:43,030 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:31:43,034 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:31:43,034 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:31:43,036 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=101+Hart+Ln&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fd49ac04490>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:31:43,037 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=Hermitage+1&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fd484bdcf10>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:35:28,485 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart ln
+2025-01-20 16:35:28,485 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart ln
+2025-01-20 16:35:28,489 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=101+Hart+ln&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fe52da1b550>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:39:23,380 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:39:23,380 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:39:23,384 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:39:23,384 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:39:23,387 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=101+Hart+Ln&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ff094359d10>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:39:23,387 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygov.us', port=443): Max retries exceeded with url: /search?owner=Hermitage+1&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7ff095168210>: Failed to resolve 'davidson.mygov.us' ([Errno -2] Name or service not known)"))
+2025-01-20 16:40:08,041 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:40:08,042 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:40:16,047 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:40:16,047 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:40:24,051 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygovonline.org', port=443): Max retries exceeded with url: /search?owner=101+Hart+Ln&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f52a5127290>: Failed to resolve 'davidson.mygovonline.org' ([Errno -3] Temporary failure in name resolution)"))
+2025-01-20 16:40:24,051 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygovonline.org', port=443): Max retries exceeded with url: /search?owner=Hermitage+1&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f52a51432d0>: Failed to resolve 'davidson.mygovonline.org' ([Errno -3] Temporary failure in name resolution)"))
+2025-01-20 16:42:03,202 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 16:42:03,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 16:42:11,208 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='davidson.mygovonline.org', port=443): Max retries exceeded with url: /search?owner=hermitage+1&year=2024 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fdb93858a10>: Failed to resolve 'davidson.mygovonline.org' ([Errno -3] Temporary failure in name resolution)"))
+2025-01-20 16:47:34,765 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart ln
+2025-01-20 16:47:34,765 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart ln
+2025-01-20 16:47:35,957 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:47:35,957 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:47:37,009 - scrappy - ERROR - No results found for 101 Hart ln
+2025-01-20 16:47:37,009 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:49:28,603 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 16:49:28,603 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 16:49:29,795 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 16:49:29,795 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart ln
+2025-01-20 16:49:30,888 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 16:49:30,890 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 16:52:02,042 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:52:02,043 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:52:03,253 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:52:03,254 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:52:04,564 - scrappy - ERROR - No results found for 101 Hart Ln
+2025-01-20 16:52:04,565 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:52:17,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:52:17,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:52:18,608 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:52:18,609 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:52:19,708 - scrappy - ERROR - No results found for 101 Hart Ln
+2025-01-20 16:52:19,709 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:52:31,351 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Lane
+2025-01-20 16:52:31,352 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Lane
+2025-01-20 16:52:32,544 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:52:32,544 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:52:33,629 - scrappy - ERROR - No results found for 101 Hart Lane
+2025-01-20 16:52:33,630 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:52:41,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:52:41,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:52:42,617 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:53:01,831 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Lane, LLC
+2025-01-20 16:53:01,832 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Lane, LLC
+2025-01-20 16:53:03,152 - scrappy - ERROR - No results found for 101 Hart Lane, LLC
+2025-01-20 16:53:08,806 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Lane LLC
+2025-01-20 16:53:08,807 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Lane LLC
+2025-01-20 16:53:09,993 - scrappy - ERROR - No results found for 101 Hart Lane LLC
+2025-01-20 16:54:38,795 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:54:38,796 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:54:39,994 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:54:39,994 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:54:41,096 - scrappy - ERROR - No results found for 101 Hart Ln
+2025-01-20 16:54:41,096 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:56:20,088 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:56:20,089 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:56:21,256 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:56:21,256 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:56:22,388 - scrappy - ERROR - No results found for 101 Hart Ln
+2025-01-20 16:56:22,389 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 16:59:44,063 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 16:59:44,063 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 16:59:45,224 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 16:59:45,227 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 16:59:46,262 - scrappy - ERROR - No results found for 101 Hart Ln
+2025-01-20 16:59:46,262 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 17:01:10,548 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 Hart Ln
+2025-01-20 17:01:10,548 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 Hart Ln
+2025-01-20 17:01:11,764 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: Hermitage 1
+2025-01-20 17:01:11,764 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: Hermitage 1
+2025-01-20 17:01:12,899 - scrappy - ERROR - No results found for 101 Hart Ln
+2025-01-20 17:01:12,900 - scrappy - ERROR - No results found for Hermitage 1
+2025-01-20 17:10:35,737 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 17:10:35,741 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 17:10:37,547 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 17:10:37,575 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart ln
+2025-01-20 17:10:38,757 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 17:10:38,758 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 17:38:53,165 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 17:38:53,170 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 17:38:54,294 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 17:38:54,294 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart lane
+2025-01-20 17:38:55,323 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 17:38:55,323 - scrappy - ERROR - No results found for 101 hart lane
+2025-01-20 17:40:13,634 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 17:40:13,634 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 17:40:14,832 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 17:40:14,840 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart ln
+2025-01-20 17:40:15,988 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 17:40:15,992 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 17:41:50,141 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 17:41:50,141 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart ln
+2025-01-20 17:41:51,361 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 17:41:51,364 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 17:41:52,542 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 17:41:52,549 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:04:51,547 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:04:51,547 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart ln
+2025-01-20 18:04:52,805 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:04:52,805 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 18:04:53,903 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:04:53,903 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:06:37,369 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:06:37,370 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: 101 hart ln
+2025-01-20 18:06:37,370 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search URL: https://nashville-tn.mygovonline.com/mod_ajaxsearch/search/get_search_results
+2025-01-20 18:06:37,370 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'term': '101 hart ln', 'year': '2024', 'search_type': 'property'}
+2025-01-20 18:06:38,484 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:06:38,484 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response content: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>eGov - Davidson County</title>
+		<!-- Meta Information -->
+				<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+		
+		<!-- Links -->
+
+        			<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/shadow_png.css?v=4544cc6"/>
+           
+2025-01-20 18:06:38,493 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Parsing search results
+2025-01-20 18:06:38,494 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:06:38,494 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:06:38,494 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching for: hermitage 1
+2025-01-20 18:06:38,494 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search URL: https://nashville-tn.mygovonline.com/mod_ajaxsearch/search/get_search_results
+2025-01-20 18:06:38,494 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'term': 'hermitage 1', 'year': '2024', 'search_type': 'property'}
+2025-01-20 18:06:39,524 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:06:39,524 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response content: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>eGov - Davidson County</title>
+		<!-- Meta Information -->
+				<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+		
+		<!-- Links -->
+
+        			<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/shadow_png.css?v=4544cc6"/>
+           
+2025-01-20 18:06:39,531 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Parsing search results
+2025-01-20 18:06:39,533 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:06:39,533 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:06:39,533 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:12:52,257 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:12:52,260 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:12:52,260 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:12:52,260 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:12:53,427 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:12:53,427 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:12:53,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:12:53,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:12:53,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:12:53,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:12:53,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:12:54,539 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:12:54,539 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:12:54,546 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:12:54,546 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:12:54,546 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:14:03,224 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:14:03,224 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:14:03,224 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:14:03,225 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:14:04,410 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:14:04,411 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:14:04,417 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:14:04,417 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:14:04,417 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:14:04,418 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:14:04,418 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:14:05,520 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:14:05,521 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:14:05,528 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:14:05,528 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:14:05,528 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:21:54,889 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:21:54,889 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:21:54,889 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:21:54,889 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:21:56,059 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:21:56,059 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:21:56,065 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:21:56,066 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:21:56,066 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:21:56,066 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:21:56,066 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:21:57,138 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:21:57,138 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:21:57,145 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:21:57,145 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:21:57,146 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:22:58,259 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:22:58,260 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:22:58,260 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:22:58,260 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:22:59,393 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:22:59,393 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:22:59,400 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:22:59,400 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:22:59,401 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:22:59,401 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:22:59,401 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:23:00,427 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:23:00,428 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:23:00,435 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:23:00,436 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:23:00,436 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:23:41,962 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:23:41,962 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:23:41,963 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:23:41,963 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:23:43,189 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:23:43,189 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:23:43,196 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:23:43,196 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:23:43,197 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:23:43,197 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:23:43,197 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:23:44,315 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:23:44,316 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:23:44,323 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:23:44,323 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:23:44,323 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:25:10,051 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:25:10,052 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:25:10,052 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:25:10,052 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:25:11,184 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:25:11,185 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:25:11,202 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:25:11,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:25:11,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:25:11,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:25:11,203 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:25:12,240 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:25:12,241 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:25:12,254 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:25:12,254 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:25:12,254 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:26:13,775 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:26:13,775 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:26:13,776 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:26:13,776 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:26:14,911 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:26:14,911 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:26:14,927 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:26:14,931 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:26:14,932 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:26:14,932 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:26:14,932 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:26:15,999 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:26:15,999 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:26:16,007 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:26:16,007 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:26:16,007 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:27:01,626 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:27:01,626 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:27:01,627 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:27:01,627 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:27:02,782 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:27:02,782 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:27:02,789 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:27:02,789 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:27:02,790 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:27:02,790 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:27:02,790 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:27:03,829 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:27:03,829 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:27:03,836 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:27:03,836 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:27:03,836 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:28:26,087 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:28:26,087 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:28:26,087 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:28:26,087 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:28:27,148 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:28:27,149 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:28:27,156 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:28:27,156 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:28:27,156 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:28:27,156 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:28:27,157 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:28:28,180 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:28:28,180 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:28:28,188 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:28:28,188 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:28:28,188 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:29:15,093 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:29:15,093 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:29:15,093 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:29:15,094 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:29:16,269 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:29:16,270 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:29:16,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:29:16,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:29:16,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:29:16,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:29:16,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:29:17,442 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:29:17,443 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:29:17,449 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:29:17,450 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:29:17,450 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:29:58,276 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:29:58,276 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:29:58,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:29:58,277 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:30:00,167 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:30:00,167 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:30:00,176 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:30:00,176 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:30:00,176 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:30:00,176 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:30:00,176 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:30:01,299 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:30:01,299 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:30:01,306 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:30:01,306 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:30:01,307 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:30:50,799 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:30:50,800 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:30:50,801 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:30:50,801 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:30:51,984 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:30:51,984 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:30:51,991 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:30:51,992 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:30:51,992 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:30:51,992 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:30:51,992 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:30:53,089 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:30:53,089 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:30:53,096 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:30:53,097 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:30:53,097 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:32:08,588 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:32:08,588 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart ln
+2025-01-20 18:32:08,589 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:32:08,589 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': '101 hart ln', 'year': '2024'}
+2025-01-20 18:32:09,772 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:32:09,772 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+ln&year=2024
+2025-01-20 18:32:09,779 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:32:09,779 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:32:09,780 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:32:09,780 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Searching URL: https://nashville-tn.mygovonline.com/property/search
+2025-01-20 18:32:09,780 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Search params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:32:10,935 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:32:10,935 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:32:10,942 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 results
+2025-01-20 18:32:10,942 - scrappy - ERROR - No results found for 101 hart ln
+2025-01-20 18:32:10,943 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:51:45,507 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 18:51:45,508 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 18:51:45,508 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://nashville-tn.mygovonline.com/property/search with params: {'q': '101 hart lane', 'year': '2024'}
+2025-01-20 18:51:46,627 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:51:46,627 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=101+hart+lane&year=2024
+2025-01-20 18:51:46,629 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response Content: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>eGov - Davidson County</title>
+		<!-- Meta Information -->
+				<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+		
+		<!-- Links -->
+
+        			<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/shadow_png.css?v=4544cc6"/>
+                		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/common.css?v=4544cc6"
+			  media="screen" title="eGov"/>
+
+		<!--<link rel="stylesheet" href="https://nashville-tn-cdn.mygovonline.com/includes/css/font-awesome.min.css?v=4544cc6">-->
+
+
+				
+														<link rel="stylesheet" type="text/css" href="includes/css/snowflakes.css" media="screen" />
+									
+		<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/common_IE7.css?v=4544cc6"  media="screen" title="eGov" /><![endif]-->
+		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/common_IE6.css?v=4544cc6"  media="screen" title="eGov" /><![endif]-->
+
+
+		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/templates/default/buttonStyles.css?v=4544cc6"/>
+		<link rel="stylesheet" type="text/css"
+			  href="public/stylesheets/default/default.css"
+			  media="screen"/>
+        			<link rel="stylesheet" type="text/css"
+				  href="public/stylesheets/davidson-ct/default.css"
+				  media="screen"/>
+                		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/print.css?v=4544cc6"
+			  media="print"/>
+
+		<link rel="stylesheet" media="all" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/includes/css/menu.css?v=4544cc6"/>
+		<link rel="stylesheet" media="screen" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/components/jquery-ui/themes/smoothness/jquery-ui.min.css?v=4544cc6"/>
+		<link rel="stylesheet" media="screen" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-datepicker/dist/angular-datepicker.css?v=4544cc6"/>
+		<link rel="stylesheet" media="screen" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/bower_components/sweetalert/dist/sweetalert.css?v=4544cc6"/>
+
+
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/components/jquery/jquery.min.js?v=4544cc6"></script>
+		<script type="text/javascript"
+				src="https://nashville-tn-cdn.mygovonline.com/components/jquery-ui/ui/minified/jquery-ui.min.js?v=4544cc6"></script>
+		<script type="text/javascript">
+			var $j = jQuery.noConflict();
+		</script>
+
+        
+        			<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/prototype.js?v=4544cc6"></script>
+                    
+		<!-- new eGov Javascript files - these scripts live off in their own namespace.
+			EVENTUALLY they will replace all the rest of the javascript files flying around in this
+			system... Eventually......  hopefully.........
+			-->
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/eGov/eGov.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/eGov/eGov.Form.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/eGov/eGov.RPCServices.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/scriptaculous/src/effects.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/scriptaculous/src/dragdrop.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/bower_components/sweetalert/dist/sweetalert.min.js?v=4544cc6"></script>
+
+		<script type="text/javascript" src="includes/javascript/keyevent.js"></script>
+
+				                        		<script type="text/javascript">
+			var trigger_search_keycode = '220';
+            
+			var PPTBarcodeSettings = {
+				'barcode_scanner_enable': 'CODE39',
+				'barcode_scanner_hotkey': 192,
+				'barcode_scanner_regex': / ^(\d\d\d\d)(\d+)$/,
+				'barcode_scanner_buffermax': 5,
+				'barcode_scanner_timeout': 1000,
+				'isScanning': false,
+				'buffer': ''
+			};
+			var gl_account_number_mask = '99999999-99999-999';
+		</script>
+
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/angular.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-filter/dist/angular-filter.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/oclazyload/dist/ocLazyLoad.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-ui-router/release/angular-ui-router.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/oclazyload/dist/ocLazyLoad.require.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-animate.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-aria.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-messages.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-material.min.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/moment.min.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/moment-timezone-with-data.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/ui-bootstrap-tpls.min.js?v=4544cc6"></script>
+		<link href="https://nashville-tn-cdn.mygovonline.com/includes/css/custom-bootstrap.css?v=4544cc6" rel="stylesheet">
+		<script type="text/javascript"
+				src="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-datepicker/dist/angular-datepicker.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/common.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar-en.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar-setup.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/smart-table.min.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/modules/propertytax/views/js/dirPagination.js?v=4544cc6"></script>
+        		<script type="text/javascript">
+            
+			Event.observe(window, 'load', function () {
+				if (top.tinyMCE) {
+					top.tinyMCE.init({
+						strict_loading_mode: true,
+						mode: "specific_textareas",
+						editor_selector: "wysiwygEditor-simple",
+						theme_advanced_buttons3_add: "spellchecker, search, replace",
+						theme: "modern",
+						convert_urls: false,
+						plugins: "textcolor",
+						toolbar: "fontsizeselect forecolor backcolor",
+						fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+					});
+					top.tinyMCE.init({
+						strict_loading_mode : true,
+						mode: "specific_textareas",
+						editor_selector: "wysiwygEditor-advanced",
+						theme_advanced_buttons3_add: "spellchecker, search, replace",
+						theme: "modern",
+						convert_urls: false,
+						plugins: "textcolor",
+						toolbar: "fontsizeselect forecolor backcolor",
+						fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+					});
+					top.tinyMCE.init({
+						strict_loading_mode : true,
+						mode: "specific_textareas",
+						editor_selector: "wysiwygEditor",
+						theme_advanced_buttons3_add: "spellchecker, search, replace",
+						theme: "modern",
+						convert_urls: false,
+						plugins: "textcolor",
+						toolbar: "fontsizeselect forecolor backcolor",
+						fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+					});
+				}
+			});
+			
+			var authenticated = 0;
+			var menuLinks = new Array(); // Storage for F8 menu links
+            var county = 'davidson';
+		</script>
+		<!-- Dynamic Javascript -->
+				<script type="text/javascript">
+			var searchStatus = 0;
+			var enter_as_tab = 0;
+			var automate_decimal_entry = 0;
+
+			function formatDate(thisis,event) {
+			if(thisis.value.length == 10)
+			return;
+
+			var keyCode = getEventKeyCode(event);
+
+			// If they are pressing backspace then don't do anything
+			if(keyCode == 8)
+			return;
+
+		if(thisis.value.length == 2)
+		thisis.value = thisis.value+'/';
+		
+
+		if(thisis.value.length == 5)
+		thisis.value = thisis.value+'/';
+		}
+
+function tryToFormat(val) { 
+
+				if ( parseDate(val) != null ) { return val; } 
+
+				var ret = ''; 
+
+				val = val.toString(); 
+ ret = ret + val.substr(0, 2) + '/'; 
+ ret = ret + val.substr(2, 2) + '/'; 
+ ret = ret + val.substr(4, val.length); 
+return ret; 
+
+			}
+
+						var use_old_menus = ( navigator.appVersion.match(/MSIE 6.0/) == null ? false : true );
+			
+			var GLOBAL_DATE_FORMAT = 'MM/dd/yyyy';
+			var DEFAULT_DATE_FORMAT = 'y-M-d';
+			var APPDIR = '';
+			var AUTH = '';
+			var unconfigured_lockout = 0;
+			var authenticated_user_id = 0;
+											</script>
+		<link rel="stylesheet" type="text/css" media="all"
+			  href="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar-system.css?v=4544cc6"/>
+		<link href='https://nashville-tn-cdn.mygovonline.com/apple-touch-icon.png?v=4544cc6' rel='apple-touch-icon'/>
+		<meta name="id"
+			  content="5DC742CA55B742C040CB999E6EEB5FB472E047C550CF9BD44FA66DB880C9977D917FC8788D9AA9739467E72DF313"/>
+		<link rel="shortcut icon" href="https://nashville-tn-cdn.mygovonline.com/favicon.ico?v=4544cc6"/>
+		<!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">-->
+
+		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/all.css?v=4544cc6"
+			  media="screen" title="eGov"/>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/all.js?v=4544cc6"></script>
+
+		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+		<!-- fontawesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<link rel="stylesheet" type="text/css" media="all"
+			  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+		<link href="https://nashville-tn-cdn.mygovonline.com/includes/css/header.css?v=4544cc6" rel="stylesheet" media="screen">
+
+		<script>
+            
+			var OlvyConfig = {
+				organisation: "egov",
+				target: "#olvy-target",
+				type: "sidebar",
+				view: {
+					showSearch: false,
+					compact: false,
+					showHeader: true, // only applies when widget type is embed. you cannot hide header for modal and sidebar widgets
+					showUnreadIndicator: true,
+					unreadIndicatorColor: "#cc1919",
+					unreadIndicatorPosition: "top-right"
+				}
+			};
+            
+		</script>
+		
+			 		<script type="text/javascript" src="https://app.olvy.co/script.js" defer="defer"></script>
+	  			
+	</head>
+	<body>
+	<!-- Objects -->
+
+    		<script type="text/javascript">
+		function getPrinterSettings(doc_name) {
+ try {if ( !factory ) { return false; }
+if ( false ) { 
+}}catch(e){}
+}
+		</script>
+	  	  	  		<div id="statusbar" class="noPrint"><div id="statusbartext">Print job successfully sent to the printer.</div></div>
+			<script type="text/javascript">Element.hide('statusbar');</script>
+			<script type="text/javascript" src="includes/javascript/custom.js"></script>
+				<div id="outer">
+																										<div class="snowflakes" aria-hidden="true">
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+</div>																							<div id="darkBackgroundLayer" class="darkenBackground" style="display: none"></div>
+					<div id="temp_warning_outer" style="display: none;">
+						<div id="temp_warning" class="error noPrint">
+							<table>
+								<tr>
+									<td style="vertical-align: top">
+										<img alt="Warning" src="templates/davidson-ct/images/icons/close_16.gif" id="temp_warning_icon" />
+									</td>
+									<td><span id="temp_warning_message"></span></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align: center">
+										[<a href="javascript: clearTempWarning();" tabindex="-1">Close</a>]
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+<link href="templates/davidson-ct/local.css" rel="stylesheet" type="text/css">
+<div id="page" >
+		<style type="text/css">
+		body {
+			background: #ececec;
+		}
+		</style>	
+	<div id="header">
+	<!--
+			<h1><a href="#" title="Montgomery County Tennessee Government">Montgomery County, Tennessee</a></h1>
+			<h2>&nbsp;</h2>
+			<div id="imageStrip"></div>
+			-->
+	</div>
+		<div id="content">
+	<!--[if lt IE 7]>
+		<div id="noIE6">
+			<a href="http://www.microsoft.com/windows/internet-explorer/ie7/">
+				<img src="images/lincoln/ie7_xp_h2_rgb.jpg" width="200" height="74" align="left">
+			</a>
+			<h1>Notice</h1> 
+			We're sorry, but these pages no longer support the version of Internet Explorer you are using.
+			To use them you will need to <a href="http://www.microsoft.com/windows/internet-explorer/ie7/">upgrade to Internet Explorer 7 or higher.</a>
+		</div>
+	<![endif]-->
+		<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="plugins/tabpane/css/tab.webfx.css" />
+<script type="text/javascript" src="plugins/tabpane/js/tabpane.js"></script>
+<p>
+<script type="text/javascript"> 
+	function submitFormCheck(arg) {
+	 			return true;
+	}
+</script>Davidson County
+</p>
+
+
+	<div class="tab-pane" id="tab-pane-1">
+		<div class="tab-page" id="Login" style="min-height:130px">
+			<h2 class="tab">Secure Login</h2>
+			<table cellpadding="0" style="margin:20px 20px;">
+				<form method="POST" action="mod.php?mod=core&mode=login&step=2" id="loginForm">
+				<tr>
+					<td><span class="requiredFieldNote">*</span> User ID:</td>
+					<td><input name="user" id="user" type="text" autocomplete="off" /></td>
+				</tr>
+				<tr>
+					<td nowrap><span class="requiredFieldNote">*</span> Password: &nbsp;</td>
+					<td style="position: relative;">
+						<input name="pass" id="pass" type="password" />
+						<div id="caps-lock-warning" style=
+						"
+							display: none;
+							position: absolute;
+							left: 100%;
+							margin-left: 6px;
+							top: 0;
+							background: #aa1111;
+							color: white;
+							white-space: nowrap;
+							padding: 2px 8px 3px;
+							border-radius: 3px;
+						">
+							<span class="arrow" style="position: absolute; right: 100%; top: 5px; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 4px solid #aa1111;"></span>
+							Warning! Caps Lock is ON
+						</div>
+					</td>
+				</tr>
+								<tr>
+					<td colspan="2" align="right"><br /><input 
+	value="Log In"
+	type="submit" 
+	id="submit_btn" 
+	onClick="this.disabled=true;if(this.form != null && this.form.onsubmit != null) {if (this.form.onsubmit()){this.form.submit();} else {this.disabled=false;return false;}}else{this.form.submit();return true;}" 
+></td>
+				</tr>
+					</form>
+			</table>
+		</div>
+			</div>
+</form>
+<script>
+
+	var passwordInput = document.getElementById('pass');
+	var capsLockWarning = document.getElementById('caps-lock-warning');
+	passwordInput.addEventListener("keyup", function(event)
+	{
+	  if (event.getModifierState("CapsLock"))
+	    capsLockWarning.style.display = "block";
+	  else
+	    capsLockWarning.style.display = "none";
+	});
+
+</script>
+<script type="text/javascript">
+setupAllTabs();
+document.getElementById("user").focus();
+</script>	<br>
+	<div id="print"><a href="javascript:printScreen(null,true,null,null,'');" tabindex="-1"><img src="images/icons/print_16.gif" alt="Print Report" border="0" /></a>&nbsp;<a href="javascript:printScreen(null,true,null,null,'');" tabindex="-1">Print Page</a></div>	</div>
+	
+		<div id="footer">
+			<!-- Footer -->
+	<div id="footer" class="noPrint" >
+		<div id="linkhome" style="float: right; padding-right: 15px;">
+			Powered by
+			<a tabindex="-1" href="http://www.mygovonline.com" target="_BLANK">eGovernment Solutions</a>
+		</div>
+			</div>
+	<br />
+	<!-- Footer -->
+	</div>
+	</div>
+			<script type="text/javascript">
+				
+				//onClickSubmitWrapper();
+				
+				
+				
+				var printers = [];
+printers.push({value: 'LOCAL', name: 'Local Printer (bypasses Server Direct printing)'});
+
+				var VapidPublicKey = '';
+			</script>
+			<div style="text-align: left; padding: 4px; margin-bottom: 4px; display: none;" id="barcode_scan_row">
+				<img class="icon_16x16"src="images/icons/silk/timeline_marker.png" style="vertical-align: middle" />
+				Barcode:
+				<input type="text" size="15" maxlength="50" id="barcode_scan" onChange="parseBarcode(this.value);" tabindex="-1" />
+			</div>
+		</div> <!-- end outer -->
+
+<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/plugins/jsprompt/Prompt.js?v=4544cc6"></script>
+<script type="text/javascript"
+		src="https://nashville-tn-cdn.mygovonline.com/includes/scriptaculous/src/scriptaculous.js?v=4544cc6"></script>
+<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/jsonrpc.js?v=4544cc6"></script>
+
+	<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/tablekit.js?v=4544cc6"></script>
+	<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/tablekit-egov.js?v=4544cc6"></script>
+
+				<script type="text/javascript" src="includes/javascript/date.js"></script>
+		<script type="text/javascript" src="components/jquery/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="includes/javascript/moment.min.js"></script>
+		<script type="text/javascript">document.onkeydown = interceptKey;	//W3C standard event registration method</script>
+		<script type="text/javascript">if(PPTBarcodeSettings.barcode_scanner_enable != 'no') document.onkeypress = interceptKeyForBarcode;</script>
+        <script type="text/javascript" src="includes/javascript/jquery.maskedinput.min.js"></script>
+				<script type="text/javascript">
+			
+			var google_measurement_id = 'G-8N2K23KZ44';
+		</script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/app.js?v=4544cc6"></script>
+	</body>
+	<script async
+			src="https://www.googletagmanager.com/gtag/js?id=G-8N2K23KZ44"></script>
+
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+
+		gtag('js', new Date());
+		gtag('config', google_measurement_id);
+    </script>
+
+
+</html>
+2025-01-20 18:51:46,648 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 potential result rows
+2025-01-20 18:51:46,648 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:51:46,648 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:51:46,648 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://nashville-tn.mygovonline.com/property/search with params: {'q': 'hermitage 1', 'year': '2024'}
+2025-01-20 18:51:47,696 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response status: 200
+2025-01-20 18:51:47,697 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response URL: https://nashville-tn.mygovonline.com/?q=hermitage+1&year=2024
+2025-01-20 18:51:47,698 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Response Content: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>eGov - Davidson County</title>
+		<!-- Meta Information -->
+				<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+		
+		<!-- Links -->
+
+        			<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/shadow_png.css?v=4544cc6"/>
+                		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/common.css?v=4544cc6"
+			  media="screen" title="eGov"/>
+
+		<!--<link rel="stylesheet" href="https://nashville-tn-cdn.mygovonline.com/includes/css/font-awesome.min.css?v=4544cc6">-->
+
+
+				
+														<link rel="stylesheet" type="text/css" href="includes/css/snowflakes.css" media="screen" />
+									
+		<!--[if lt IE 8]><link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/common_IE7.css?v=4544cc6"  media="screen" title="eGov" /><![endif]-->
+		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/common_IE6.css?v=4544cc6"  media="screen" title="eGov" /><![endif]-->
+
+
+		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/templates/default/buttonStyles.css?v=4544cc6"/>
+		<link rel="stylesheet" type="text/css"
+			  href="public/stylesheets/default/default.css"
+			  media="screen"/>
+        			<link rel="stylesheet" type="text/css"
+				  href="public/stylesheets/davidson-ct/default.css"
+				  media="screen"/>
+                		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/print.css?v=4544cc6"
+			  media="print"/>
+
+		<link rel="stylesheet" media="all" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/includes/css/menu.css?v=4544cc6"/>
+		<link rel="stylesheet" media="screen" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/components/jquery-ui/themes/smoothness/jquery-ui.min.css?v=4544cc6"/>
+		<link rel="stylesheet" media="screen" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-datepicker/dist/angular-datepicker.css?v=4544cc6"/>
+		<link rel="stylesheet" media="screen" type="text/css"
+			  href="https://nashville-tn-cdn.mygovonline.com/bower_components/sweetalert/dist/sweetalert.css?v=4544cc6"/>
+
+
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/components/jquery/jquery.min.js?v=4544cc6"></script>
+		<script type="text/javascript"
+				src="https://nashville-tn-cdn.mygovonline.com/components/jquery-ui/ui/minified/jquery-ui.min.js?v=4544cc6"></script>
+		<script type="text/javascript">
+			var $j = jQuery.noConflict();
+		</script>
+
+        
+        			<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/prototype.js?v=4544cc6"></script>
+                    
+		<!-- new eGov Javascript files - these scripts live off in their own namespace.
+			EVENTUALLY they will replace all the rest of the javascript files flying around in this
+			system... Eventually......  hopefully.........
+			-->
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/eGov/eGov.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/eGov/eGov.Form.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/eGov/eGov.RPCServices.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/scriptaculous/src/effects.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/scriptaculous/src/dragdrop.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/bower_components/sweetalert/dist/sweetalert.min.js?v=4544cc6"></script>
+
+		<script type="text/javascript" src="includes/javascript/keyevent.js"></script>
+
+				                        		<script type="text/javascript">
+			var trigger_search_keycode = '220';
+            
+			var PPTBarcodeSettings = {
+				'barcode_scanner_enable': 'CODE39',
+				'barcode_scanner_hotkey': 192,
+				'barcode_scanner_regex': / ^(\d\d\d\d)(\d+)$/,
+				'barcode_scanner_buffermax': 5,
+				'barcode_scanner_timeout': 1000,
+				'isScanning': false,
+				'buffer': ''
+			};
+			var gl_account_number_mask = '99999999-99999-999';
+		</script>
+
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/angular.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-filter/dist/angular-filter.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/oclazyload/dist/ocLazyLoad.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-ui-router/release/angular-ui-router.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/bower_components/oclazyload/dist/ocLazyLoad.require.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-animate.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-aria.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-messages.min.js?v=4544cc6"></script>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/angular/active_version/libs/angular-material.min.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/moment.min.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/moment-timezone-with-data.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/ui-bootstrap-tpls.min.js?v=4544cc6"></script>
+		<link href="https://nashville-tn-cdn.mygovonline.com/includes/css/custom-bootstrap.css?v=4544cc6" rel="stylesheet">
+		<script type="text/javascript"
+				src="https://nashville-tn-cdn.mygovonline.com/bower_components/angular-datepicker/dist/angular-datepicker.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/common.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar-en.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar-setup.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/smart-table.min.js?v=4544cc6"></script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/modules/propertytax/views/js/dirPagination.js?v=4544cc6"></script>
+        		<script type="text/javascript">
+            
+			Event.observe(window, 'load', function () {
+				if (top.tinyMCE) {
+					top.tinyMCE.init({
+						strict_loading_mode: true,
+						mode: "specific_textareas",
+						editor_selector: "wysiwygEditor-simple",
+						theme_advanced_buttons3_add: "spellchecker, search, replace",
+						theme: "modern",
+						convert_urls: false,
+						plugins: "textcolor",
+						toolbar: "fontsizeselect forecolor backcolor",
+						fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+					});
+					top.tinyMCE.init({
+						strict_loading_mode : true,
+						mode: "specific_textareas",
+						editor_selector: "wysiwygEditor-advanced",
+						theme_advanced_buttons3_add: "spellchecker, search, replace",
+						theme: "modern",
+						convert_urls: false,
+						plugins: "textcolor",
+						toolbar: "fontsizeselect forecolor backcolor",
+						fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+					});
+					top.tinyMCE.init({
+						strict_loading_mode : true,
+						mode: "specific_textareas",
+						editor_selector: "wysiwygEditor",
+						theme_advanced_buttons3_add: "spellchecker, search, replace",
+						theme: "modern",
+						convert_urls: false,
+						plugins: "textcolor",
+						toolbar: "fontsizeselect forecolor backcolor",
+						fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
+					});
+				}
+			});
+			
+			var authenticated = 0;
+			var menuLinks = new Array(); // Storage for F8 menu links
+            var county = 'davidson';
+		</script>
+		<!-- Dynamic Javascript -->
+				<script type="text/javascript">
+			var searchStatus = 0;
+			var enter_as_tab = 0;
+			var automate_decimal_entry = 0;
+
+			function formatDate(thisis,event) {
+			if(thisis.value.length == 10)
+			return;
+
+			var keyCode = getEventKeyCode(event);
+
+			// If they are pressing backspace then don't do anything
+			if(keyCode == 8)
+			return;
+
+		if(thisis.value.length == 2)
+		thisis.value = thisis.value+'/';
+		
+
+		if(thisis.value.length == 5)
+		thisis.value = thisis.value+'/';
+		}
+
+function tryToFormat(val) { 
+
+				if ( parseDate(val) != null ) { return val; } 
+
+				var ret = ''; 
+
+				val = val.toString(); 
+ ret = ret + val.substr(0, 2) + '/'; 
+ ret = ret + val.substr(2, 2) + '/'; 
+ ret = ret + val.substr(4, val.length); 
+return ret; 
+
+			}
+
+						var use_old_menus = ( navigator.appVersion.match(/MSIE 6.0/) == null ? false : true );
+			
+			var GLOBAL_DATE_FORMAT = 'MM/dd/yyyy';
+			var DEFAULT_DATE_FORMAT = 'y-M-d';
+			var APPDIR = '';
+			var AUTH = '';
+			var unconfigured_lockout = 0;
+			var authenticated_user_id = 0;
+											</script>
+		<link rel="stylesheet" type="text/css" media="all"
+			  href="https://nashville-tn-cdn.mygovonline.com/includes/calendar/calendar-system.css?v=4544cc6"/>
+		<link href='https://nashville-tn-cdn.mygovonline.com/apple-touch-icon.png?v=4544cc6' rel='apple-touch-icon'/>
+		<meta name="id"
+			  content="5DC742CA55B742C040CB999E6EEB5FB472E047C550CF9BD44FA66DB880C9977D917FC8788D9AA9739467E72DF313"/>
+		<link rel="shortcut icon" href="https://nashville-tn-cdn.mygovonline.com/favicon.ico?v=4544cc6"/>
+		<!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">-->
+
+		<link rel="stylesheet" type="text/css" href="https://nashville-tn-cdn.mygovonline.com/includes/css/all.css?v=4544cc6"
+			  media="screen" title="eGov"/>
+		<script src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/all.js?v=4544cc6"></script>
+
+		<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+		<!-- fontawesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+		<link rel="stylesheet" type="text/css" media="all"
+			  href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+
+		<link href="https://nashville-tn-cdn.mygovonline.com/includes/css/header.css?v=4544cc6" rel="stylesheet" media="screen">
+
+		<script>
+            
+			var OlvyConfig = {
+				organisation: "egov",
+				target: "#olvy-target",
+				type: "sidebar",
+				view: {
+					showSearch: false,
+					compact: false,
+					showHeader: true, // only applies when widget type is embed. you cannot hide header for modal and sidebar widgets
+					showUnreadIndicator: true,
+					unreadIndicatorColor: "#cc1919",
+					unreadIndicatorPosition: "top-right"
+				}
+			};
+            
+		</script>
+		
+			 		<script type="text/javascript" src="https://app.olvy.co/script.js" defer="defer"></script>
+	  			
+	</head>
+	<body>
+	<!-- Objects -->
+
+    		<script type="text/javascript">
+		function getPrinterSettings(doc_name) {
+ try {if ( !factory ) { return false; }
+if ( false ) { 
+}}catch(e){}
+}
+		</script>
+	  	  	  		<div id="statusbar" class="noPrint"><div id="statusbartext">Print job successfully sent to the printer.</div></div>
+			<script type="text/javascript">Element.hide('statusbar');</script>
+			<script type="text/javascript" src="includes/javascript/custom.js"></script>
+				<div id="outer">
+																										<div class="snowflakes" aria-hidden="true">
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+  ❅
+  </div>
+  <div class="snowflake">
+  ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+  <div class="snowflake">
+    ❅
+  </div>
+  <div class="snowflake">
+    ❆
+  </div>
+</div>																							<div id="darkBackgroundLayer" class="darkenBackground" style="display: none"></div>
+					<div id="temp_warning_outer" style="display: none;">
+						<div id="temp_warning" class="error noPrint">
+							<table>
+								<tr>
+									<td style="vertical-align: top">
+										<img alt="Warning" src="templates/davidson-ct/images/icons/close_16.gif" id="temp_warning_icon" />
+									</td>
+									<td><span id="temp_warning_message"></span></td>
+								</tr>
+								<tr>
+									<td colspan="2" style="text-align: center">
+										[<a href="javascript: clearTempWarning();" tabindex="-1">Close</a>]
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+<link href="templates/davidson-ct/local.css" rel="stylesheet" type="text/css">
+<div id="page" >
+		<style type="text/css">
+		body {
+			background: #ececec;
+		}
+		</style>	
+	<div id="header">
+	<!--
+			<h1><a href="#" title="Montgomery County Tennessee Government">Montgomery County, Tennessee</a></h1>
+			<h2>&nbsp;</h2>
+			<div id="imageStrip"></div>
+			-->
+	</div>
+		<div id="content">
+	<!--[if lt IE 7]>
+		<div id="noIE6">
+			<a href="http://www.microsoft.com/windows/internet-explorer/ie7/">
+				<img src="images/lincoln/ie7_xp_h2_rgb.jpg" width="200" height="74" align="left">
+			</a>
+			<h1>Notice</h1> 
+			We're sorry, but these pages no longer support the version of Internet Explorer you are using.
+			To use them you will need to <a href="http://www.microsoft.com/windows/internet-explorer/ie7/">upgrade to Internet Explorer 7 or higher.</a>
+		</div>
+	<![endif]-->
+		<link id="webfx-tab-style-sheet" type="text/css" rel="stylesheet" href="plugins/tabpane/css/tab.webfx.css" />
+<script type="text/javascript" src="plugins/tabpane/js/tabpane.js"></script>
+<p>
+<script type="text/javascript"> 
+	function submitFormCheck(arg) {
+	 			return true;
+	}
+</script>Davidson County
+</p>
+
+
+	<div class="tab-pane" id="tab-pane-1">
+		<div class="tab-page" id="Login" style="min-height:130px">
+			<h2 class="tab">Secure Login</h2>
+			<table cellpadding="0" style="margin:20px 20px;">
+				<form method="POST" action="mod.php?mod=core&mode=login&step=2" id="loginForm">
+				<tr>
+					<td><span class="requiredFieldNote">*</span> User ID:</td>
+					<td><input name="user" id="user" type="text" autocomplete="off" /></td>
+				</tr>
+				<tr>
+					<td nowrap><span class="requiredFieldNote">*</span> Password: &nbsp;</td>
+					<td style="position: relative;">
+						<input name="pass" id="pass" type="password" />
+						<div id="caps-lock-warning" style=
+						"
+							display: none;
+							position: absolute;
+							left: 100%;
+							margin-left: 6px;
+							top: 0;
+							background: #aa1111;
+							color: white;
+							white-space: nowrap;
+							padding: 2px 8px 3px;
+							border-radius: 3px;
+						">
+							<span class="arrow" style="position: absolute; right: 100%; top: 5px; border-top: 4px solid transparent; border-bottom: 4px solid transparent; border-right: 4px solid #aa1111;"></span>
+							Warning! Caps Lock is ON
+						</div>
+					</td>
+				</tr>
+								<tr>
+					<td colspan="2" align="right"><br /><input 
+	value="Log In"
+	type="submit" 
+	id="submit_btn" 
+	onClick="this.disabled=true;if(this.form != null && this.form.onsubmit != null) {if (this.form.onsubmit()){this.form.submit();} else {this.disabled=false;return false;}}else{this.form.submit();return true;}" 
+></td>
+				</tr>
+					</form>
+			</table>
+		</div>
+			</div>
+</form>
+<script>
+
+	var passwordInput = document.getElementById('pass');
+	var capsLockWarning = document.getElementById('caps-lock-warning');
+	passwordInput.addEventListener("keyup", function(event)
+	{
+	  if (event.getModifierState("CapsLock"))
+	    capsLockWarning.style.display = "block";
+	  else
+	    capsLockWarning.style.display = "none";
+	});
+
+</script>
+<script type="text/javascript">
+setupAllTabs();
+document.getElementById("user").focus();
+</script>	<br>
+	<div id="print"><a href="javascript:printScreen(null,true,null,null,'');" tabindex="-1"><img src="images/icons/print_16.gif" alt="Print Report" border="0" /></a>&nbsp;<a href="javascript:printScreen(null,true,null,null,'');" tabindex="-1">Print Page</a></div>	</div>
+	
+		<div id="footer">
+			<!-- Footer -->
+	<div id="footer" class="noPrint" >
+		<div id="linkhome" style="float: right; padding-right: 15px;">
+			Powered by
+			<a tabindex="-1" href="http://www.mygovonline.com" target="_BLANK">eGovernment Solutions</a>
+		</div>
+			</div>
+	<br />
+	<!-- Footer -->
+	</div>
+	</div>
+			<script type="text/javascript">
+				
+				//onClickSubmitWrapper();
+				
+				
+				
+				var printers = [];
+printers.push({value: 'LOCAL', name: 'Local Printer (bypasses Server Direct printing)'});
+
+				var VapidPublicKey = '';
+			</script>
+			<div style="text-align: left; padding: 4px; margin-bottom: 4px; display: none;" id="barcode_scan_row">
+				<img class="icon_16x16"src="images/icons/silk/timeline_marker.png" style="vertical-align: middle" />
+				Barcode:
+				<input type="text" size="15" maxlength="50" id="barcode_scan" onChange="parseBarcode(this.value);" tabindex="-1" />
+			</div>
+		</div> <!-- end outer -->
+
+<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/plugins/jsprompt/Prompt.js?v=4544cc6"></script>
+<script type="text/javascript"
+		src="https://nashville-tn-cdn.mygovonline.com/includes/scriptaculous/src/scriptaculous.js?v=4544cc6"></script>
+<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/jsonrpc.js?v=4544cc6"></script>
+
+	<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/tablekit.js?v=4544cc6"></script>
+	<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/tablekit-egov.js?v=4544cc6"></script>
+
+				<script type="text/javascript" src="includes/javascript/date.js"></script>
+		<script type="text/javascript" src="components/jquery/jquery.blockUI.js"></script>
+        <script type="text/javascript" src="includes/javascript/moment.min.js"></script>
+		<script type="text/javascript">document.onkeydown = interceptKey;	//W3C standard event registration method</script>
+		<script type="text/javascript">if(PPTBarcodeSettings.barcode_scanner_enable != 'no') document.onkeypress = interceptKeyForBarcode;</script>
+        <script type="text/javascript" src="includes/javascript/jquery.maskedinput.min.js"></script>
+				<script type="text/javascript">
+			
+			var google_measurement_id = 'G-8N2K23KZ44';
+		</script>
+		<script type="text/javascript" src="https://nashville-tn-cdn.mygovonline.com/includes/javascript/app.js?v=4544cc6"></script>
+	</body>
+	<script async
+			src="https://www.googletagmanager.com/gtag/js?id=G-8N2K23KZ44"></script>
+
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+
+		gtag('js', new Date());
+		gtag('config', google_measurement_id);
+    </script>
+
+
+</html>
+2025-01-20 18:51:47,710 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Found 0 potential result rows
+2025-01-20 18:51:47,710 - scrappy - ERROR - No results found for 101 hart lane
+2025-01-20 18:51:47,710 - scrappy - ERROR - No results found for hermitage 1
+2025-01-20 18:52:39,644 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 18:52:39,644 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 18:52:39,645 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://property.nashville.gov/Property/PropertySearch with params: {'PropertySearchText': '101 hart lane', 'TaxYear': '2024', 'SearchBy': 'Address'}
+2025-01-20 18:52:39,690 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Error: Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=101+hart+lane&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f02d960fa90>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:52:39,691 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:52:39,691 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:52:39,691 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://property.nashville.gov/Property/PropertySearch with params: {'PropertySearchText': 'hermitage 1', 'TaxYear': '2024', 'SearchBy': 'Address'}
+2025-01-20 18:52:39,694 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Error: Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=hermitage+1&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f02d9628e50>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:52:39,694 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=101+hart+lane&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f02d960fa90>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:52:39,694 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=hermitage+1&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f02d9628e50>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:59:22,170 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 18:59:22,170 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 18:59:22,171 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://property.nashville.gov/Property/PropertySearch with params: {'PropertySearchText': '101 hart lane', 'TaxYear': '2024', 'SearchBy': 'Address'}
+2025-01-20 18:59:22,177 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Error: Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=101+hart+lane&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fea88518f10>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:59:22,177 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:59:22,177 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 18:59:22,178 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://property.nashville.gov/Property/PropertySearch with params: {'PropertySearchText': 'hermitage 1', 'TaxYear': '2024', 'SearchBy': 'Address'}
+2025-01-20 18:59:22,240 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Error: Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=hermitage+1&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fea76e2c750>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:59:22,243 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=101+hart+lane&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fea88518f10>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 18:59:22,245 - scrappy - ERROR - Search failed: HTTPSConnectionPool(host='property.nashville.gov', port=443): Max retries exceeded with url: /Property/PropertySearch?PropertySearchText=hermitage+1&TaxYear=2024&SearchBy=Address (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fea76e2c750>: Failed to resolve 'property.nashville.gov' ([Errno -2] Name or service not known)"))
+2025-01-20 19:00:15,012 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 19:00:15,012 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: 101 hart lane
+2025-01-20 19:00:15,012 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://www.padctn.org/prc with params: {'PropertySearchText': '101 hart lane', 'TaxYear': '2024', 'SearchBy': 'Address'}
+2025-01-20 19:00:16,083 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Error: Search failed: 404 Client Error: Not Found for url: https://www.padctn.org/prc?PropertySearchText=101+hart+lane&TaxYear=2024&SearchBy=Address
+2025-01-20 19:00:16,084 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 19:00:16,084 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Processing: hermitage 1
+2025-01-20 19:00:16,084 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Making request to: https://www.padctn.org/prc with params: {'PropertySearchText': 'hermitage 1', 'TaxYear': '2024', 'SearchBy': 'Address'}
+2025-01-20 19:00:16,911 - scrappy - INFO - [Nashville (Davidson County), TN][2024] Error: Search failed: 404 Client Error: Not Found for url: https://www.padctn.org/prc?PropertySearchText=hermitage+1&TaxYear=2024&SearchBy=Address
+2025-01-20 19:00:16,911 - scrappy - ERROR - Search failed: 404 Client Error: Not Found for url: https://www.padctn.org/prc?PropertySearchText=101+hart+lane&TaxYear=2024&SearchBy=Address
+2025-01-20 19:00:16,911 - scrappy - ERROR - Search failed: 404 Client Error: Not Found for url: https://www.padctn.org/prc?PropertySearchText=hermitage+1&TaxYear=2024&SearchBy=Address

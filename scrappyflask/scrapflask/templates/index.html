@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-4" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#owners" type="button">Owner Names</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addresses" type="button">Addresses</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <!-- Owner Names Tab -->
+                    <div class="tab-pane fade show active" id="owners">
+                        <form id="ownerForm" onsubmit="submitForm(event)">
+                            <div class="mb-3">
+                                <label for="ownerNames" class="form-label">Enter Owner Names</label>
+                                <textarea class="form-control" id="ownerNames" name="owners" rows="5" placeholder="Enter each owner name on a new line">{{ form_data.owners if form_data else '' }}</textarea>
+                                <div class="form-text">Enter multiple owner names, one per line.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="locale" class="form-label">Select Location</label>
+                                <select class="form-select" id="locale" name="locale">
+                                    {% for code, name in locales.items() %}
+                                    <option value="{{ code }}" {% if form_data and form_data.locale == code %}selected{% endif %}>{{ name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="taxYear" class="form-label">Tax Year</label>
+                                <input type="text" class="form-control" id="taxYear" name="tax_year" value="2024">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Search Properties</button>
+                        </form>
+                    </div>
+
+                    <!-- Addresses Tab -->
+                    <div class="tab-pane fade" id="addresses">
+                        <div class="text-center py-5">
+                            <h5>Address Search Coming Soon!</h5>
+                            <p class="text-muted">This feature will allow you to search properties by address.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Container -->
+<div id="resultsContainer" class="row mt-4" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Search Results</h5>
+                <div id="jobStatus" class="badge bg-secondary">Pending</div>
+            </div>
+            <div class="card-body">
+                <div id="results" class="mb-3"></div>
+                <nav id="pagination" class="mb-3" style="display: none;">
+                    <ul class="pagination justify-content-center">
+                        <!-- Pagination will be populated by JavaScript -->
+                    </ul>
+                </nav>
+                <div id="downloadButtons" style="display: none;">
+                    <a href="#" id="downloadExcel" class="btn btn-success me-2">
+                        <i class="bi bi-file-earmark-spreadsheet me-1"></i>
+                        Download Excel
+                    </a>
+                    <a href="#" id="downloadPDFs" class="btn btn-danger">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>
+                        Download PDFs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Match Confirmation Modal -->
+<div class="modal fade" id="matchConfirmModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Property Match</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="matchQuestion"></p>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" onclick="respondToMatch(false)">No</button>
+                    <button type="button" class="btn btn-primary" onclick="respondToMatch(true)">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentJobId = null;
+let matchModal = null;
+let currentPage = 1;
+let pollTimer = null;
+let currentSessionId = null;  // Added to track session ID
+
+// Initialize match modal when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    matchModal = new bootstrap.Modal(document.getElementById('matchConfirmModal'));
+});
+
+async function submitForm(event) {
+    event.preventDefault();
+    const form = event.target;
+    const ownerNames = form.querySelector('#ownerNames').value.split('\n').filter(name => name.trim());
+    const locale = form.querySelector('#locale').value;
+    const taxYear = form.querySelector('#taxYear').value;
+
+    // Clear any existing results
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+    document.getElementById('downloadButtons').style.display = 'none';
+
+    try {
+        // Generate a unique session ID
+        currentSessionId = uuidv4();  // Store session ID for later use
+
+        // Create the job through our backend
+        const response = await fetch('/scrape', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                session_id: currentSessionId,
+                owners: ownerNames[0],  // API expects a single owner
+                locale: locale,
+                tax_year: taxYear
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.status === 'success') {
+            currentJobId = data.job_id;
+            currentPage = 1;
+            showResults();
+            pollJobStatus();
+        } else {
+            throw new Error('Failed to create job: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        showError('Error: ' + error.message);
+    }
+}
+
+async function pollJobStatus() {
+    if (pollTimer) {
+        clearTimeout(pollTimer);
+    }
+
+    const statusBadge = document.getElementById('jobStatus');
+    const resultsDiv = document.getElementById('results');
+    const downloadButtons = document.getElementById('downloadButtons');
+
+    try {
+        const response = await fetch(`/api/jobs/${currentJobId}?page=${currentPage}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        // Update status badge
+        const status = (data.status || '').toLowerCase();
+        statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        statusBadge.className = `badge bg-${getStatusColor(status)}`;
+
+        // Handle confirmation if needed
+        if (status === 'confirmation_required') {
+            if (data.owner && data.match) {
+                await handleMatchConfirmation(data.owner, data.match);
+            }
+            return;
+        }
+
+        // Display any available results
+        if (data.results && data.results.length > 0) {
+            displayResults(data.results, data.pagination);
+            if (status === 'completed') {
+                downloadButtons.style.display = 'block';
+                setupDownloadButtons(currentJobId);
+            }
+        }
+
+        // Check for job completion
+        if (status === 'completed') {
+            if (!data.results || data.results.length === 0) {
+                resultsDiv.innerHTML = '<p class="text-center text-muted">No properties found matching your search criteria.</p>';
+            }
+            return; // Stop polling
+        }
+
+        if (status === 'failed') {
+            showError(data.error_message || 'Job failed');
+            downloadButtons.style.display = 'none';
+            return; // Stop polling
+        }
+
+        // Show processing message if no results yet
+        if (!document.getElementById('matchConfirmModal').classList.contains('show') && 
+            (!data.results || data.results.length === 0)) {
+            resultsDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p class="mt-2">Processing your request...</p></div>';
+        }
+
+        // Continue polling
+        pollTimer = setTimeout(pollJobStatus, 2000);
+    } catch (error) {
+        showError('Error checking job status: ' + error.message);
+    }
+}
+
+function showResults() {
+    document.getElementById('resultsContainer').style.display = 'block';
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p class="mt-2">Processing your request...</p></div>';
+}
+
+async function handleMatchConfirmation(owner, match) {
+    document.getElementById('matchQuestion').textContent = `Does "${owner}" match "${match}"?`;
+    matchModal.show();
+}
+
+function displayResults(results, pagination) {
+    const resultsDiv = document.getElementById('results');
+    const paginationNav = document.getElementById('pagination');
+
+    resultsDiv.innerHTML = results.map(result => `
+        <div class="border-bottom mb-3 pb-3">
+            <h6>${result.owner_name}</h6>
+            <p class="mb-1"><strong>Address:</strong> ${result.property_address || 'N/A'}</p>
+            <p class="mb-1"><strong>Parcel ID:</strong> ${result.parcel_id || 'N/A'}</p>
+            <p class="mb-1"><strong>Values:</strong></p>
+            <ul>
+                <li>Land: $${(result.land_value || 0).toLocaleString()}</li>
+                <li>Improvements: $${(result.improvement_value || 0).toLocaleString()}</li>
+                <li>Total: $${(result.total_value || 0).toLocaleString()}</li>
+            </ul>
+            ${result.pdf_url ? `<a href="${result.pdf_url}" class="btn btn-sm btn-secondary" target="_blank">View Tax Bill</a>` : ''}
+        </div>
+    `).join('');
+
+    if (pagination && pagination.pages > 1) {
+        paginationNav.querySelector('ul').innerHTML = generatePaginationHtml(pagination);
+        paginationNav.style.display = 'block';
+    } else {
+        paginationNav.style.display = 'none';
+    }
+}
+
+function setupDownloadButtons(jobId) {
+    const excelBtn = document.getElementById('downloadExcel');
+    const pdfsBtn = document.getElementById('downloadPDFs');
+    excelBtn.href = `/api/jobs/${jobId}/download/excel`;
+    pdfsBtn.href = `/api/jobs/${jobId}/download/pdfs`;
+}
+
+function getStatusColor(status) {
+    switch (status) {
+        case 'pending': return 'secondary';
+        case 'running': return 'primary';
+        case 'completed': return 'success';
+        case 'failed': return 'danger';
+        default: return 'secondary';
+    }
+}
+
+function generatePaginationHtml(pagination) {
+    const pages = [];
+    if (pagination.has_prev) {
+        pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${pagination.page - 1})">&laquo;</a></li>`);
+    }
+
+    for (let i = 1; i <= pagination.pages; i++) {
+        if (i === pagination.page) {
+            pages.push(`<li class="page-item active"><span class="page-link">${i}</span></li>`);
+        } else {
+            pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i})">${i}</a></li>`);
+        }
+    }
+
+    if (pagination.has_next) {
+        pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${pagination.page + 1})">&raquo;</a></li>`);
+    }
+
+    return pages.join('');
+}
+
+async function changePage(page) {
+    currentPage = page;
+    const response = await fetch(`/api/jobs/${currentJobId}?page=${page}`);
+    const data = await response.json();
+    if (response.ok && data.results) {
+        displayResults(data.results, data.pagination);
+    }
+}
+
+function showError(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.querySelector('.col-md-8').insertBefore(alertDiv, document.querySelector('.card'));
+}
+
+// Global function for handling match responses
+async function respondToMatch(confirmed) {
+    try {
+        const response = await fetch(`/api/jobs/${currentJobId}/confirm`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                confirmation: confirmed ? 'yes' : 'no',
+                session_id: currentSessionId  // Include session ID in confirmation
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        matchModal.hide();
+        // Resume polling after confirmation
+        pollJobStatus();
+    } catch (error) {
+        console.error('Error confirming match:', error);
+        showError('Error confirming match: ' + error.message);
+    }
+}
+</script>
+{% endblock %}

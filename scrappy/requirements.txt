@@ -1,0 +1,9 @@
+openpyxl
+beautifulsoup4
+requests
+termcolor
+rapidfuzz
+colorama
+fastapi
+pydantic
+uvicorn
