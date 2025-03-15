@@ -21,19 +21,19 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
     app.config.from_object(Config)
-    
+
     # Ensure the database URI is set
     if not app.config.get('SQLALCHEMY_DATABASE_URI'):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///scrappy.db')
-    
+
     db.init_app(app)
-    
+
     with app.app_context():
         from . import models
         db.create_all()
         from .routes import bp
         app.register_blueprint(bp)
-    
+
     return app
 
 app = create_app()

@@ -5,8 +5,8 @@ import json
 from datetime import datetime
 from flask import Blueprint, jsonify, request, render_template, send_file, current_app
 from werkzeug.utils import secure_filename
-from scrappyflask.scrapflask.models import db, ScrapingJob, ScrapingResult, ScrapingConfirmation
-from scrappyflask.scrapflask.services import ScrappyService
+from web.models import db, ScrapingJob, ScrapingResult, ScrapingConfirmation
+from web.services import ScrappyService
 import requests
 import logging
 import uuid
@@ -89,12 +89,12 @@ def index():
         default_locales = {
             'davidson-tn': 'Nashville/Davidson County, TN',
         }
-        return render_template('index.html', 
+        return render_template('index.html',
                              locales=default_locales,
                              error="Unable to load all locations. Showing default options.")
     except Exception as e:
         logger.error(f"Unexpected error fetching locales: {str(e)}", exc_info=True)
-        return render_template('index.html', 
+        return render_template('index.html',
                              error="Unable to load locations. Please try again later.",
                              locales={'davidson-tn': 'Nashville/Davidson County, TN'})
 

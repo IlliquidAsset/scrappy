@@ -71,17 +71,17 @@ def download_pdf(link: str, pdf_folder: str, filename: str, current: int, total:
         return None
 
     try:
-        response = requests.get(link, stream=True, timeout=30)
-        if response.status_code == 200:
-            file_path = os.path.join(pdf_folder, f"{filename}.pdf")
-            with open(file_path, "wb") as pdf_file:
-                for chunk in response.iter_content(chunk_size=1024):
-                    pdf_file.write(chunk)
-            logger.info(f"PDF {current} of {total} downloaded successfully: {file_path}")
-            return file_path
-        else:
-            logger.error(f"Failed to download PDF. Status: {response.status_code}")
-            return None
+        with requests.get(link, stream=True, timeout=30) as response:
+            if response.status_code == 200:
+                file_path = os.path.join(pdf_folder, f"{filename}.pdf")
+                with open(file_path, "wb") as pdf_file:
+                    for chunk in response.iter_content(chunk_size=1024):
+                        pdf_file.write(chunk)
+                logger.info(f"PDF {current} of {total} downloaded successfully: {file_path}")
+                return file_path
+            else:
+                logger.error(f"Failed to download PDF. Status: {response.status_code}")
+                return None
     except Exception as e:
         logger.error(f"Error downloading PDF: {e}")
         return None

@@ -11,6 +11,7 @@ from requests.exceptions import RequestException, Timeout
 from web.database import db
 from web.models import ScrapingJob, ScrapingResult, ScrapingConfirmation
 import logging
+import time
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -22,16 +23,16 @@ class ScrappyService:
     def create_scraping_job(owner_names, locale, tax_year, session_id=None):
         """
         Create a new scraping job
-        
+
         Args:
             owner_names (list): List of owner names to scrape
             locale (str): Locale code (e.g., 'davidson-tn')
             tax_year (str): Tax year to search
             session_id (str, optional): Existing session ID to use
-            
+
         Returns:
             ScrapingJob: Created job object
-            
+
         Raises:
             Exception: If job creation fails
         """
@@ -41,19 +42,21 @@ class ScrappyService:
         logger.debug(f"Creating new job with session_id: {session_id}")
 
         try:
-            # Use transaction to ensure data consistency
-            db.session.begin_nested()
-            
-            # Check if session already exists
+            # Check if session already exists outside of transaction
             existing_job = ScrapingJob.query.filter_by(session_id=session_id).first()
             if existing_job:
-                db.session.commit()
                 return existing_job
+
+            # Convert owner_names to JSON-compatible dict
+            if isinstance(owner_names, list):
+                owner_names_json = {"names": owner_names}
+            else:
+                owner_names_json = {"names": [owner_names] if owner_names else []}
 
             # Create job record
             job = ScrapingJob(
                 session_id=session_id,
-                owner_names=owner_names,
+                owner_names=owner_names_json,
                 locale=locale,
                 tax_year=tax_year,
                 status='pending'
@@ -67,20 +70,20 @@ class ScrappyService:
             api_url = f"{current_app.config['SCRAPPY_API_URL']}/scrape"
             payload = {
                 "session_id": session_id,
-                "owners": owner_names[0] if isinstance(owner_names, list) else owner_names,
+                "owners": owner_names[0] if isinstance(owner_names, list) and owner_names else owner_names,
                 "locale": locale,
                 "tax_year": tax_year
             }
 
             # Make the API request with timeout
             logger.debug(f"Calling Scrappy API with payload: {payload}")
-            
+
             timeout = current_app.config.get('SCRAPPY_API_TIMEOUT', 30)
-            
+
             try:
                 response = requests.post(
-                    api_url, 
-                    json=payload, 
+                    api_url,
+                    json=payload,
                     timeout=timeout
                 )
                 response.raise_for_status()
@@ -104,7 +107,7 @@ class ScrappyService:
             # Handle confirmation required status
             if data.get("status") == "confirmation_required":
                 job.status = "confirmation_required"
-                
+
                 # Create confirmation record
                 confirmation = ScrapingConfirmation(
                     id=data.get("confirmation_id", str(uuid.uuid4())),
@@ -122,7 +125,7 @@ class ScrappyService:
             elif data.get("status") == "success":
                 job.status = "running"
                 db.session.commit()
-                
+
                 # Start background thread to poll for job status
                 thread = threading.Thread(
                     target=ScrappyService._poll_job_status,
@@ -130,7 +133,7 @@ class ScrappyService:
                 )
                 thread.daemon = True
                 thread.start()
-                
+
                 logger.info(f"Successfully started scraping job with session_id: {session_id}")
                 return job
             else:
@@ -138,11 +141,11 @@ class ScrappyService:
                 error_details = f"Response data: {data}"
                 if error_msg:
                     error_details = f"{error_msg}. {error_details}"
-                    
+
                 job.status = 'failed'
                 job.error_message = error_details
                 db.session.commit()
-                
+
                 raise Exception(f"Scrappy API error: {error_details}")
 
         except IntegrityError as e:
@@ -152,84 +155,112 @@ class ScrappyService:
             return ScrapingJob.query.filter_by(session_id=session_id).first()
         except (SQLAlchemyError, Exception) as e:
             logger.error(f"Error during job creation: {str(e)}", exc_info=True)
-            try:
-                db.session.rollback()
-                if 'job' in locals():
+            db.session.rollback()
+            if 'job' in locals():
+                try:
                     job.status = 'failed'
                     job.error_message = str(e)
+                    db.session.add(job)  # Re-add job after rollback
                     db.session.commit()
-            except:
-                pass  # If we can't even update the job status, just continue
+                except Exception:
+                    pass  # If we can't even update the job status, just continue
             raise
 
     @staticmethod
     def _poll_job_status(job_id, session_id, max_attempts=30):
         """
         Background task to poll for job status updates
-        
+
         Args:
             job_id (int): Job ID to poll
             session_id (str): Session ID to query
             max_attempts (int): Maximum number of status check attempts
         """
         logger.debug(f"Starting status polling for job {job_id}")
-        
+
         interval = current_app.config.get('SCRAPPY_STATUS_CHECK_INTERVAL', 5)
         attempts = 0
-        
+        consecutive_errors = 0
+        max_consecutive_errors = 3
+
         # Get application context
         with current_app.app_context():
             while attempts < max_attempts:
                 attempts += 1
-                
+
                 try:
                     # Get job status from database
                     job = ScrapingJob.query.get(job_id)
                     if not job:
                         logger.error(f"Job {job_id} not found during status polling")
                         return
-                    
+
                     # If job is already completed or failed, stop polling
                     if job.status in ['completed', 'failed']:
                         logger.info(f"Job {job_id} is already in final state: {job.status}")
                         return
-                    
+
                     # Check status from API
                     api_url = f"{current_app.config['SCRAPPY_API_URL']}/files/{session_id}"
-                    response = requests.get(api_url, timeout=5)
-                    
-                    if response.status_code != 200:
-                        logger.warning(f"Failed to check status for job {job_id}: HTTP {response.status_code}")
-                        continue
-                    
-                    data = response.json()
-                    
-                    # Update job last status check time
-                    job.last_status_check = datetime.utcnow()
-                    
-                    # Process results if files are available
-                    if data.get('file_count', 0) > 0:
-                        # Create result entries from files
-                        ScrappyService._process_job_results(job, data)
-                        
-                        # Mark job as completed
-                        job.status = 'completed'
-                        job.completed_at = datetime.utcnow()
+
+                    try:
+                        response = requests.get(api_url, timeout=5)
+                        response.raise_for_status()
+                        consecutive_errors = 0  # Reset consecutive error counter on success
+
+                        data = response.json()
+
+                        # Update job last status check time
+                        job.last_status_check = datetime.utcnow()
+
+                        # Process results if files are available
+                        if data.get('file_count', 0) > 0:
+                            # Create result entries from files
+                            ScrappyService._process_job_results(job, data)
+
+                            # Mark job as completed
+                            job.status = 'completed'
+                            job.completed_at = datetime.utcnow()
+                            db.session.commit()
+
+                            logger.info(f"Job {job_id} completed with {data.get('file_count', 0)} files")
+                            return
+
+                        # Save status check
                         db.session.commit()
-                        
-                        logger.info(f"Job {job_id} completed with {data.get('file_count', 0)} files")
-                        return
-                    
-                    # Save status check
-                    db.session.commit()
-                    
+
+                    except requests.RequestException as e:
+                        consecutive_errors += 1
+                        logger.warning(f"API request error on attempt {attempts}: {e}")
+
+                        if consecutive_errors >= max_consecutive_errors:
+                            logger.error(f"Too many consecutive errors ({consecutive_errors}). Stopping polling.")
+                            job.status = 'failed'
+                            job.error_message = f"API communication error: {str(e)}"
+                            job.completed_at = datetime.utcnow()
+                            db.session.commit()
+                            return
+
                 except Exception as e:
+                    consecutive_errors += 1
                     logger.error(f"Error polling status for job {job_id}: {str(e)}", exc_info=True)
-                
+
+                    if consecutive_errors >= max_consecutive_errors:
+                        logger.error(f"Too many consecutive errors ({consecutive_errors}). Stopping polling.")
+                        try:
+                            job = ScrapingJob.query.get(job_id)
+                            if job and job.status not in ['completed', 'failed']:
+                                job.status = 'failed'
+                                job.error_message = f"Polling error: {str(e)}"
+                                job.completed_at = datetime.utcnow()
+                                db.session.commit()
+                        except Exception as inner_e:
+                            logger.error(f"Error updating job after polling failure: {str(inner_e)}")
+                        return
+
                 # Sleep before next attempt
-                import time
                 time.sleep(interval)
-            
+
             # If we reached max attempts without completion, mark as failed
             try:
                 job = ScrapingJob.query.get(job_id)
@@ -246,19 +277,25 @@ class ScrappyService:
     def _process_job_results(job, data):
         """
         Process job results from API response
-        
+
         Args:
             job (ScrapingJob): Job object
             data (dict): API response data
         """
         # In a real implementation, this would parse the files or get result data
         # from the Scrappy API and create ScrapingResult records
-        
+
         # For now, we'll create a sample result record
         try:
+            # Handle owner_names as JSON dict
+            if isinstance(job.owner_names, dict) and 'names' in job.owner_names:
+                owner_name = job.owner_names['names'][0] if job.owner_names['names'] else "Unknown"
+            else:
+                owner_name = str(job.owner_names)
+
             result = ScrapingResult(
                 job_id=job.id,
-                owner_name=job.owner_names[0] if isinstance(job.owner_names, list) else job.owner_names,
+                owner_name=owner_name,
                 property_address="123 Main St",
                 parcel_id="123-456-789",
                 land_value=500000.0,
@@ -270,7 +307,7 @@ class ScrappyService:
             )
             db.session.add(result)
             db.session.commit()
-            
+
             logger.info(f"Created result record for job {job.id}")
         except Exception as e:
             logger.error(f"Error creating result record for job {job.id}: {str(e)}", exc_info=True)
@@ -281,10 +318,10 @@ class ScrappyService:
     def check_job_status(job):
         """
         Check job status and return results
-        
+
         Args:
             job (ScrapingJob): Job to check
-            
+
         Returns:
             dict: Job status data with results
         """
@@ -302,7 +339,7 @@ class ScrappyService:
                     job_id=job.id,
                     response=None
                 ).order_by(ScrapingConfirmation.created_at.desc()).first()
-                
+
                 if confirmation:
                     return {
                         'status': 'confirmation_required',
@@ -339,12 +376,12 @@ class ScrappyService:
     def send_confirmation(job_id, session_id, confirmation):
         """
         Send confirmation response to Scrappy API
-        
+
         Args:
             job_id (int): Job ID
             session_id (str): Session ID
             confirmation (str): Confirmation response ('yes' or 'no')
-            
+
         Returns:
             bool: True if confirmation was sent successfully
         """
@@ -355,11 +392,11 @@ class ScrappyService:
                 session_id=session_id,
                 response=None
             ).order_by(ScrapingConfirmation.created_at.desc()).first()
-            
+
             if not confirmation_record:
                 logger.warning(f"No pending confirmation found for job {job_id}")
                 return False
-            
+
             # Prepare API request
             api_url = f"{current_app.config['SCRAPPY_API_URL']}/confirm"
             payload = {
@@ -376,13 +413,13 @@ class ScrappyService:
             # Update confirmation record
             confirmation_record.response = confirmation
             db.session.commit()
-            
+
             # Update job status to running if confirmed
             job = ScrapingJob.query.get(job_id)
             if job and job.status == 'confirmation_required':
                 job.status = 'running'
                 db.session.commit()
-                
+
                 # Start background thread to poll for job status
                 thread = threading.Thread(
                     target=ScrappyService._poll_job_status,

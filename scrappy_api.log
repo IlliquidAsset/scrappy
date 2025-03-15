@@ -1,0 +1,3 @@
+2025-03-15 23:55:09 - scrappy.api - INFO - [v1.0.0] Received scrape request
+2025-03-15 23:55:09 - scrappy.api - INFO - Using session ID: 61520b8f-bf2e-4e05-82b8-b75fe17694a1
+2025-03-15 23:55:09 - scrappy.api - INFO - Starting background scraping for session 61520b8f-bf2e-4e05-82b8-b75fe17694a1

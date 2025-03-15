@@ -78,8 +78,9 @@ def scrape_owner_data(session, owner_name, base_url, tax_year, confirmed_matches
     normalized_owner_name = normalize_text(owner_name)
     seen_accounts = set()
     page = 1
+    max_pages = 20  # Safety limit to avoid infinite loops
 
-    while True:
+    while page <= max_pages:  # Add maximum page limit
         payload = {
             "selectMenu": "individual",
             "tax_year": tax_year,
@@ -87,7 +88,7 @@ def scrape_owner_data(session, owner_name, base_url, tax_year, confirmed_matches
             "page": page
         }
 
-        logger.debug(f"Scraping data for {owner_name} (page {page})")
+        logger.debug(f"Scraping data for {owner_name} (page {page} of max {max_pages})")
         try:
             response = make_scrape_request(session, base_url, payload)
             
@@ -103,10 +104,19 @@ def scrape_owner_data(session, owner_name, base_url, tax_year, confirmed_matches
             if not process_table_rows(soup, table, owner_name, confirmed_matches, results, seen_accounts, locale):
                 break
 
+            # Check if we found any new results on this page
+            new_results_count = len(seen_accounts)
+            if new_results_count == 0 and page > 1:
+                logger.info(f"No new properties found on page {page} for {owner_name}. Stopping.")
+                break
+
             page += 1
         except requests.RequestException as e:
             logger.error(f"Error fetching data for {owner_name}, Page: {page}: {e}")
             break
+    
+    if page > max_pages:
+        logger.warning(f"Reached maximum page limit ({max_pages}) for {owner_name}. Stopping to prevent infinite loop.")
 
 def handle_response(response, owner_name, page):
     """Handle the HTTP response from the server."""

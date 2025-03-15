@@ -9,7 +9,7 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent
 sys.path.insert(0, str(project_root))
 
-from web.app import create_app
+from web.web_app import create_app
 
 app = create_app()
 

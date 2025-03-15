@@ -12,7 +12,7 @@ class Config:
     }
 
     # Scrappy API Configuration
-    SCRAPPY_API_URL = 'https://scrappy-illiquidasset.replit.app'  
+    SCRAPPY_API_URL = os.environ.get('SCRAPPY_API_URL', 'http://localhost:8080')
     SCRAPPY_API_TIMEOUT = 30  # seconds
     SCRAPPY_STATUS_CHECK_INTERVAL = timedelta(seconds=5)
     SCRAPPY_SESSION_EXPIRY = timedelta(hours=24)

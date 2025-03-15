@@ -20,6 +20,7 @@ class RateLimiter:
         self.min_interval = 1.0 / max_calls_per_second
         self.last_call_time = 0
         self.lock = Lock()
+        self._time_func = time.time  # For easier mocking in tests
     
     def wait(self):
         """
@@ -28,16 +29,22 @@ class RateLimiter:
         Returns:
             float: Time slept in seconds
         """
+        current_time = self._time_func()
+        
         with self.lock:
-            elapsed = time.time() - self.last_call_time
+            elapsed = current_time - self.last_call_time
             to_wait = max(0, self.min_interval - elapsed)
             
-            if to_wait > 0:
-                logger.debug(f"Rate limiting: sleeping for {to_wait:.3f} seconds")
-                time.sleep(to_wait)
+            # Update last call time *before* sleeping to prevent concurrent calls
+            # from all sleeping and then making requests at the same time
+            self.last_call_time = current_time + to_wait
             
-            self.last_call_time = time.time()
-            return to_wait
+        # Sleep outside the lock to reduce lock contention
+        if to_wait > 0:
+            logger.debug(f"Rate limiting: sleeping for {to_wait:.3f} seconds")
+            time.sleep(to_wait)
+            
+        return to_wait
 
 def rate_limited(max_per_second):
     """
