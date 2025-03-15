@@ -1,8 +1,28 @@
 """Database models for ScrapFlask"""
 from datetime import datetime
-from sqlalchemy.dialects.postgresql import JSONB
+import json
+from sqlalchemy import TEXT
 from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy.types import TypeDecorator
 from web.database import db
+
+# Custom JSON type for SQLite compatibility
+class JSONEncodedDict(TypeDecorator):
+    """Represents a JSON structure as a TEXT SQLite column."""
+    impl = TEXT
+    
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            value = json.dumps(value)
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            value = json.loads(value)
+        return value
+
+# Use our custom type instead of JSONB
+MutableJsonDict = MutableDict.as_mutable(JSONEncodedDict)
 
 class ScrapingJob(db.Model):
     """Model for tracking scraping jobs"""
@@ -11,7 +31,7 @@ class ScrapingJob(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     session_id = db.Column(db.String(36), nullable=False, unique=True, index=True)  # Scrappy API session ID
     status = db.Column(db.String(20), nullable=False, default='pending', index=True)  # pending, running, completed, failed, confirmation_required
-    owner_names = db.Column(MutableDict.as_mutable(JSONB), nullable=False)  # List of owner names to scrape
+    owner_names = db.Column(MutableJsonDict, nullable=False)  # List of owner names to scrape - now using JSON compatible type
     locale = db.Column(db.String(50), nullable=False, index=True)
     tax_year = db.Column(db.String(4), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, index=True)
@@ -61,7 +81,7 @@ class ScrapingResult(db.Model):
     total_value = db.Column(db.Float)
     tax_rate = db.Column(db.String(20))
     pdf_url = db.Column(db.String(255))  # URL from Scrappy API to fetch the PDF
-    raw_data = db.Column(MutableDict.as_mutable(JSONB))
+    raw_data = db.Column(MutableJsonDict)  # Also using JSON compatible type here
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     job = db.relationship('ScrapingJob', backref=db.backref('results', lazy=True, cascade='all, delete-orphan'))
     

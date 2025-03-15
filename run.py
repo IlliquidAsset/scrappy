@@ -11,9 +11,17 @@ import threading
 import webbrowser
 import time
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables at the top of run.py
+load_dotenv()
 
 # Import configuration
 from config import API_PORT, API_HOST, WEB_PORT, WEB_HOST
+
+# Set required environment variables if they're not already set
+if 'DATABASE_URL' not in os.environ and 'SQLALCHEMY_DATABASE_URI' in os.environ:
+    os.environ['DATABASE_URL'] = os.environ['SQLALCHEMY_DATABASE_URI']
 
 # Commands to start services
 API_COMMAND = ["uvicorn", "app:app", "--host", API_HOST, "--port", str(API_PORT)]

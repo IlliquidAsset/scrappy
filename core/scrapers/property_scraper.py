@@ -7,7 +7,7 @@ from core.utils.confirmation import ask_confirmation  # Use new module instead o
 from termcolor import colored
 import time
 import logging
-from scrappy.locales import SUPPORTED_LOCALES  
+from core.locales import SUPPORTED_LOCALES  # Fixed import here
 
 # Set up logging
 logger = logging.getLogger(__name__)

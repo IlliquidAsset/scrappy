@@ -16,15 +16,15 @@ if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
 # Import logging first to set up early
-from utils.logging_setup import setup_logging
+from core.utils.logging_setup import setup_logging
 
 # Set up logging
 logger = setup_logging("scrappy.main", os.environ.get('LOG_LEVEL', 'INFO'))
 
 # Now import other modules
-from scrapers.property_scraper import scrape_property_data
-from scrapers.detail_scraper import scrape_details
-from utils.session_cleaner import cleanup_old_sessions
+from core.scrapers.property_scraper import scrape_property_data
+from core.scrapers.detail_scraper import scrape_details
+from core.utils.session_cleaner import cleanup_old_sessions
 import requests
 
 def get_session_folders(session_id: Optional[str] = None) -> Tuple[str, str]:
@@ -108,7 +108,7 @@ def select_locale_cli() -> str:
         str: Selected locale code
     """
     # Dynamically import to avoid circular references
-    from locales import SUPPORTED_LOCALES
+    from core.locales import SUPPORTED_LOCALES
     
     # Check for environment variable first
     env_locale = os.getenv("SCRAPPY_LOCALE")
@@ -194,8 +194,8 @@ def main() -> Dict[str, Any]:
                 property["PDF Path"] = pdf_path
 
         # Write outputs (importing here to avoid circular imports)
-        from outputs.excel_writer import write_to_excel
-        from utils.logger import log_errors
+        from core.outputs.excel_writer import write_to_excel
+        from core.utils.logger import log_errors
         
         excel_file_path = os.path.join(OUTPUT_FOLDER, "output.xlsx")
         write_to_excel(property_data, excel_file_path)

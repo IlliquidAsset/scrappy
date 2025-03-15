@@ -8,20 +8,25 @@ import io
 import json
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
 import uvicorn
 import uuid
 
+from main import get_session_folders  # Correct import path
 from core.locales import SUPPORTED_LOCALES
 from core.scrapers.property_scraper import scrape_property_data
 from core.utils.logging_setup import setup_logging
-from core.main import get_session_folders
 
 VERSION = "v1.0.0"
 
 # Set up logging
 logger = setup_logging("scrappy.api", "INFO", "scrappy_api.log")
+
+# Define constants for timeouts and intervals
+SCRAPPY_API_TIMEOUT = 30  # seconds
+SCRAPPY_STATUS_CHECK_INTERVAL = timedelta(seconds=5)
+SCRAPPY_SESSION_EXPIRY = timedelta(hours=24)
 
 app = FastAPI(
     title="Scrappy API",
@@ -48,17 +53,6 @@ class ScrapeRequest(BaseModel):
     def locale_must_be_supported(cls, v):
         if v not in SUPPORTED_LOCALES:
             raise ValueError(f'Locale {v} is not supported')
-        return v
-
-class ConfirmationRequest(BaseModel):
-    session_id: constr(min_length=1, max_length=36)
-    confirmation_id: Optional[constr(min_length=1, max_length=36)] = None
-    confirmation: constr(min_length=2, max_length=3)
-    
-    @validator('confirmation')
-    def confirmation_must_be_valid(cls, v):
-        if v not in ["yes", "no"]:
-            raise ValueError(f'Confirmation must be "yes" or "no"')
         return v
 
 @app.get("/")

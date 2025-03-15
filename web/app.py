@@ -1,9 +1,13 @@
 import os
 import sys
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Set up Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = os.path.dirname(os.path.dirname(os.path.dirname(current_dir)))
+root_dir = os.path.dirname(current_dir)
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
@@ -17,6 +21,11 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
     app.config.from_object(Config)
+    
+    # Ensure the database URI is set
+    if not app.config.get('SQLALCHEMY_DATABASE_URI'):
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///scrappy.db')
+    
     db.init_app(app)
     
     with app.app_context():
