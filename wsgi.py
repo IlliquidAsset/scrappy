@@ -1,31 +1,19 @@
+"""
+WSGI entry point for Flask web application
+"""
 import os
 import sys
-from flask import Flask
-from flask_cors import CORS
+from pathlib import Path
 
-# Add paths
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.insert(0, current_dir)
+# Add project root to Python path
+project_root = Path(__file__).resolve().parent
+sys.path.insert(0, str(project_root))
 
-from scrappyflask.scrapflask.database import db
-from scrappyflask.scrapflask.config import Config
-from scrappyflask.scrapflask.routes import bp
-
-def create_app():
-    app = Flask(__name__)
-    CORS(app)
-    app.config.from_object(Config)
-    db.init_app(app)
-    
-    with app.app_context():
-        from scrappyflask.scrapflask import models
-        db.create_all()
-        app.register_blueprint(bp)
-    
-    return app
+from web.app import create_app
 
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    # Import configuration
+    from config import WEB_HOST, WEB_PORT
+    app.run(host=WEB_HOST, port=WEB_PORT, debug=True)

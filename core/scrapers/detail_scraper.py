@@ -1,0 +1,115 @@
+import requests
+from bs4 import BeautifulSoup
+import logging
+from functools import wraps
+import time
+
+# Set up logging
+logger = logging.getLogger(__name__)
+
+def retry(max_attempts=3, delay=1):
+    """Retry decorator with exponential backoff"""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            attempts = 0
+            while attempts < max_attempts:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    attempts += 1
+                    if attempts == max_attempts:
+                        logger.error(f"Failed after {max_attempts} attempts: {e}")
+                        raise
+                    logger.warning(f"Attempt {attempts} failed: {e}. Retrying in {delay * 2**attempts} seconds...")
+                    time.sleep(delay * 2**attempts)
+        return wrapper
+    return decorator
+
+@retry(max_attempts=3)
+def scrape_details(link):
+    """
+    Scrape detailed property information from a property page.
+    
+    Args:
+        link (str): URL to the property details page
+        
+    Returns:
+        dict: Detailed property information
+    """
+    if not link:
+        logger.warning("No link provided for detail scraping")
+        return {}
+    
+    try:
+        response = requests.get(link, timeout=10)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "html.parser")
+
+            def safe_find(label):
+                """Safely find a value in the table by its label"""
+                try:
+                    element = soup.find("td", string=label)
+                    if not element:
+                        logger.debug(f"Label '{label}' not found in {link}")
+                        return ""
+                    
+                    value_element = element.find_next("td")
+                    if not value_element:
+                        logger.debug(f"Value for '{label}' not found in {link}")
+                        return ""
+                    
+                    return value_element.text.strip()
+                except AttributeError as e:
+                    logger.warning(f"Error finding '{label}' in {link}: {e}")
+                    return ""
+
+            # Extract property details
+            parcel = safe_find("Parcel:")
+            improvement_value = safe_find("Improvement Value:")
+            land_value = safe_find("Land Value:")
+            personal_property_value = safe_find("Personal Property Value:")
+            taxable_property = safe_find("Taxable Property:").replace("x", "").strip()
+            tax_rate = safe_find("2024 Tax Rate:")
+            
+            # Convert values to numbers where appropriate
+            try:
+                improvement_value_float = float(improvement_value.replace('$', '').replace(',', ''))
+            except (ValueError, AttributeError):
+                improvement_value_float = 0
+                
+            try:
+                land_value_float = float(land_value.replace('$', '').replace(',', ''))
+            except (ValueError, AttributeError):
+                land_value_float = 0
+                
+            try:
+                personal_property_value_float = float(personal_property_value.replace('$', '').replace(',', ''))
+            except (ValueError, AttributeError):
+                personal_property_value_float = 0
+            
+            # Calculate total value
+            total_value = improvement_value_float + land_value_float + personal_property_value_float
+
+            return {
+                "Parcel": parcel,
+                "Improvement Value": improvement_value,
+                "Improvement Value Float": improvement_value_float,
+                "Land Value": land_value,
+                "Land Value Float": land_value_float,
+                "Personal Property Value": personal_property_value,
+                "Personal Property Value Float": personal_property_value_float,
+                "Total Value": total_value,
+                "Assessment Rate": taxable_property,
+                "Tax Rate": tax_rate,
+            }
+        else:
+            logger.error(f"Failed to fetch details from {link}: HTTP {response.status_code}")
+            return {}
+            
+    except requests.RequestException as e:
+        logger.error(f"Request error fetching details from {link}: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Error processing details from {link}: {e}")
+        raise

@@ -2,25 +2,46 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Scrappy API",
-            "type": "python",
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/scrappy/api.py",
-            "cwd": "${workspaceFolder}/scrappy",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Scrappy API",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/app.py",
+            "cwd": "${workspaceFolder}",
             "env": {
-                "PORT": "8080"
+                "PORT": "8080",
+                "PYTHONPATH": "${workspaceFolder}"
             },
             "console": "integratedTerminal"
         },
         {
             "name": "ScrapFlask Frontend",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/scrappyflask/scrapflask/app.py",
-            "cwd": "${workspaceFolder}/scrappyflask",
+            "program": "${workspaceFolder}/wsgi.py",
+            "cwd": "${workspaceFolder}",
             "env": {
                 "FLASK_ENV": "development",
-                "SCRAPPY_API_URL": "http://localhost:8080"
+                "FLASK_APP": "wsgi.py",
+                "SCRAPPY_API_URL": "http://localhost:8080",
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Run Combined",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/run.py",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
             },
             "console": "integratedTerminal"
         }
@@ -28,7 +49,10 @@
     "compounds": [
         {
             "name": "Full Stack",
-            "configurations": ["Scrappy API", "ScrapFlask Frontend"]
+            "configurations": [
+                "Scrappy API",
+                "ScrapFlask Frontend"
+            ]
         }
     ]
 }

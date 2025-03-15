@@ -1,0 +1,680 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div id="alertContainer"></div>
+
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-4" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#owners" type="button">Owner Names</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addresses" type="button">Addresses</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <!-- Owner Names Tab -->
+                    <div class="tab-pane fade show active" id="owners">
+                        <form id="ownerForm" onsubmit="submitForm(event)">
+                            <div class="mb-3">
+                                <label for="ownerNames" class="form-label">Enter Owner Names</label>
+                                <textarea class="form-control" id="ownerNames" name="owners" rows="5" 
+                                    placeholder="Enter each owner name on a new line" required>{{ form_data.owners if form_data else '' }}</textarea>
+                                <div class="form-text">Enter multiple owner names, one per line.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="locale" class="form-label">Select Location</label>
+                                <select class="form-select" id="locale" name="locale" required>
+                                    <option value="">-- Select a location --</option>
+                                    {% for code, name in locales.items() %}
+                                    <option value="{{ code }}" {% if form_data and form_data.locale == code %}selected{% endif %}>{{ name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="taxYear" class="form-label">Tax Year</label>
+                                <input type="text" class="form-control" id="taxYear" name="tax_year" 
+                                    value="{% if form_data %}{{ form_data.tax_year }}{% else %}2024{% endif %}"
+                                    pattern="[0-9]{4}" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submitButton">
+                                Search Properties
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Addresses Tab -->
+                    <div class="tab-pane fade" id="addresses">
+                        <div class="text-center py-5">
+                            <h5>Address Search Coming Soon!</h5>
+                            <p class="text-muted">This feature will allow you to search properties by address.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Container -->
+<div id="resultsContainer" class="row mt-4" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Search Results</h5>
+                <div id="jobStatus" class="badge bg-secondary">Pending</div>
+            </div>
+            <div class="card-body">
+                <div id="results" class="mb-3"></div>
+                <nav id="pagination" class="mb-3" style="display: none;">
+                    <ul class="pagination justify-content-center">
+                        <!-- Pagination will be populated by JavaScript -->
+                    </ul>
+                </nav>
+                <div id="downloadButtons" style="display: none;">
+                    <a href="#" id="downloadExcel" class="btn btn-success me-2">
+                        <i class="bi bi-file-earmark-spreadsheet me-1"></i>
+                        Download Excel
+                    </a>
+                    <a href="#" id="downloadPDFs" class="btn btn-danger">
+                        <i class="bi bi-file-earmark-pdf me-1"></i>
+                        Download PDFs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Match Confirmation Modal -->
+<div class="modal fade" id="matchConfirmModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Property Match</h5>
+            </div>
+            <div class="modal-body">
+                <p id="matchQuestion"></p>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" onclick="respondToMatch(false)">No</button>
+                    <button type="button" class="btn btn-primary" onclick="respondToMatch(true)">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div class="modal fade" id="loadingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-4">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h5 id="loadingMessage">Processing your request...</h5>
+                <p id="loadingSubtext" class="text-muted">This may take a moment.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Global variables
+let currentJobId = null;
+let matchModal = null;
+let loadingModal = null;
+let currentPage = 1;
+let pollTimer = null;
+let currentSessionId = null;
+let requestTimeout = 60000; // 60 seconds timeout for requests
+let maxRetries = 3; // Maximum number of retries for failed requests
+
+// Initialize modals when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    matchModal = new bootstrap.Modal(document.getElementById('matchConfirmModal'));
+    loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+});
+
+/**
+ * Submit the search form
+ * @param {Event} event - Form submit event
+ */
+async function submitForm(event) {
+    event.preventDefault();
+    
+    // Form validation
+    const form = event.target;
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    
+    // Disable submit button and show loading state
+    const submitButton = document.getElementById('submitButton');
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+    
+    // Show loading modal
+    showLoadingModal('Starting property search...', 'Connecting to property database');
+    
+    // Get form values
+    const ownerNames = form.querySelector('#ownerNames').value.split('\n').filter(name => name.trim());
+    const locale = form.querySelector('#locale').value;
+    const taxYear = form.querySelector('#taxYear').value;
+
+    // Clear any existing results
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+    document.getElementById('downloadButtons').style.display = 'none';
+    
+    // Clear any existing alerts
+    clearAlerts();
+
+    try {
+        // Generate a unique session ID
+        currentSessionId = uuidv4();
+        
+        // Create the job through our backend
+        const response = await fetchWithTimeout('/scrape', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                session_id: currentSessionId,
+                owners: ownerNames.join(';'),
+                locale: locale,
+                tax_year: taxYear
+            }),
+            timeout: requestTimeout
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Request failed with status ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.status === 'success') {
+            currentJobId = data.job_id;
+            currentPage = 1;
+            
+            // Update loading modal
+            updateLoadingModal('Searching property records...', 'This may take a few moments');
+            
+            // Show results container
+            showResults();
+            
+            // Start polling for job status
+            pollJobStatus();
+        } else {
+            throw new Error('Failed to create job: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showError('Error: ' + error.message);
+    } finally {
+        // Re-enable submit button
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Search Properties';
+    }
+}
+
+/**
+ * Fetch with timeout capability
+ * @param {string} url - URL to fetch
+ * @param {Object} options - Fetch options
+ * @returns {Promise} - Fetch promise
+ */
+async function fetchWithTimeout(url, options = {}) {
+    const { timeout = 10000 } = options;
+    
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    
+    try {
+        const response = await fetch(url, {
+            ...options,
+            signal: controller.signal
+        });
+        clearTimeout(id);
+        return response;
+    } catch (error) {
+        clearTimeout(id);
+        if (error.name === 'AbortError') {
+            throw new Error('Request timed out');
+        }
+        throw error;
+    }
+}
+
+/**
+ * Retry a fetch operation with exponential backoff
+ * @param {string} url - URL to fetch
+ * @param {Object} options - Fetch options
+ * @param {number} retries - Number of retries remaining
+ * @returns {Promise} - Fetch promise
+ */
+async function fetchWithRetry(url, options = {}, retries = maxRetries) {
+    try {
+        return await fetchWithTimeout(url, options);
+    } catch (error) {
+        if (retries === 0) throw error;
+        
+        // Exponential backoff
+        const delay = 1000 * Math.pow(2, maxRetries - retries);
+        console.log(`Retrying after ${delay}ms (${retries} retries left)`);
+        
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return fetchWithRetry(url, options, retries - 1);
+    }
+}
+
+/**
+ * Poll for job status
+ */
+async function pollJobStatus() {
+    if (pollTimer) {
+        clearTimeout(pollTimer);
+    }
+
+    const statusBadge = document.getElementById('jobStatus');
+    const resultsDiv = document.getElementById('results');
+    const downloadButtons = document.getElementById('downloadButtons');
+
+    try {
+        const response = await fetchWithRetry(`/api/jobs/${currentJobId}?page=${currentPage}`, {
+            timeout: 10000
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Request failed with status ${response.status}`);
+        }
+        
+        const data = await response.json();
+
+        // Update status badge
+        const status = (data.status || '').toLowerCase();
+        statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        statusBadge.className = `badge bg-${getStatusColor(status)}`;
+
+        // Handle confirmation if needed
+        if (status === 'confirmation_required') {
+            hideLoadingModal();
+            if (data.owner && data.match) {
+                await handleMatchConfirmation(data.owner, data.match, data.confirmation_id);
+            }
+            return;
+        }
+
+        // Display any available results
+        if (data.results && data.results.length > 0) {
+            hideLoadingModal();
+            displayResults(data.results, data.pagination);
+            if (status === 'completed') {
+                downloadButtons.style.display = 'block';
+                setupDownloadButtons(currentJobId);
+            }
+        }
+
+        // Check for job completion
+        if (status === 'completed') {
+            hideLoadingModal();
+            if (!data.results || data.results.length === 0) {
+                resultsDiv.innerHTML = '<div class="alert alert-info">No properties found matching your search criteria.</div>';
+            }
+            return; // Stop polling
+        }
+
+        if (status === 'failed') {
+            hideLoadingModal();
+            showError(data.error_message || 'Job failed');
+            downloadButtons.style.display = 'none';
+            return; // Stop polling
+        }
+
+        // Show processing message if no results yet
+        if (!document.getElementById('matchConfirmModal').classList.contains('show') && 
+            (!data.results || data.results.length === 0)) {
+            resultsDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p class="mt-2">Processing your request...</p></div>';
+        }
+
+        // Continue polling
+        pollTimer = setTimeout(pollJobStatus, 2000);
+    } catch (error) {
+        hideLoadingModal();
+        showError('Error checking job status: ' + error.message);
+    }
+}
+
+/**
+ * Show loading modal with custom message
+ * @param {string} message - Main loading message
+ * @param {string} subtext - Secondary loading message
+ */
+function showLoadingModal(message, subtext) {
+    document.getElementById('loadingMessage').textContent = message || 'Processing...';
+    document.getElementById('loadingSubtext').textContent = subtext || 'Please wait';
+    loadingModal.show();
+}
+
+/**
+ * Update loading modal text
+ * @param {string} message - Main loading message
+ * @param {string} subtext - Secondary loading message
+ */
+function updateLoadingModal(message, subtext) {
+    document.getElementById('loadingMessage').textContent = message || 'Processing...';
+    document.getElementById('loadingSubtext').textContent = subtext || 'Please wait';
+}
+
+/**
+ * Hide loading modal
+ */
+function hideLoadingModal() {
+    loadingModal.hide();
+}
+
+/**
+ * Show results container
+ */
+function showResults() {
+    document.getElementById('resultsContainer').style.display = 'block';
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p class="mt-2">Processing your request...</p></div>';
+}
+
+/**
+ * Handle match confirmation
+ * @param {string} owner - Owner name
+ * @param {string} match - Matched name
+ * @param {string} confirmationId - Confirmation ID
+ */
+async function handleMatchConfirmation(owner, match, confirmationId = null) {
+    document.getElementById('matchQuestion').textContent = `Does "${owner}" match "${match}"?`;
+    document.getElementById('matchConfirmModal').setAttribute('data-confirmation-id', confirmationId || '');
+    matchModal.show();
+}
+
+/**
+ * Display search results
+ * @param {Array} results - Search results
+ * @param {Object} pagination - Pagination info
+ */
+function displayResults(results, pagination) {
+    const resultsDiv = document.getElementById('results');
+    const paginationNav = document.getElementById('pagination');
+
+    if (results.length === 0) {
+        resultsDiv.innerHTML = '<div class="alert alert-info">No properties found matching your search criteria.</div>';
+        paginationNav.style.display = 'none';
+        return;
+    }
+
+    resultsDiv.innerHTML = results.map(result => `
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">${escapeHtml(result.owner_name || 'Unknown Owner')}</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Address:</strong> ${escapeHtml(result.property_address || 'N/A')}</p>
+                        <p class="mb-1"><strong>Parcel ID:</strong> ${escapeHtml(result.parcel_id || 'N/A')}</p>
+                        <p class="mb-1"><strong>Tax Rate:</strong> ${escapeHtml(result.tax_rate || 'N/A')}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Property Values</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Land: $${formatCurrency(result.land_value || 0)}</li>
+                            <li class="list-group-item">Improvements: $${formatCurrency(result.improvement_value || 0)}</li>
+                            <li class="list-group-item">Total: $${formatCurrency(result.total_value || 0)}</li>
+                        </ul>
+                    </div>
+                </div>
+                ${result.pdf_url ? `
+                <div class="mt-3">
+                    <a href="${result.pdf_url}" class="btn btn-sm btn-secondary" target="_blank">
+                        <i class="bi bi-file-earmark-pdf me-1"></i> View Tax Bill
+                    </a>
+                </div>` : ''}
+            </div>
+        </div>
+    `).join('');
+
+    if (pagination && pagination.pages > 1) {
+        paginationNav.querySelector('ul').innerHTML = generatePaginationHtml(pagination);
+        paginationNav.style.display = 'block';
+    } else {
+        paginationNav.style.display = 'none';
+    }
+}
+
+/**
+ * Setup download buttons
+ * @param {number} jobId - Job ID
+ */
+function setupDownloadButtons(jobId) {
+    const excelBtn = document.getElementById('downloadExcel');
+    const pdfsBtn = document.getElementById('downloadPDFs');
+    excelBtn.href = `/api/jobs/${jobId}/download/excel`;
+    pdfsBtn.href = `/api/jobs/${jobId}/download/pdfs`;
+}
+
+/**
+ * Get status color for badge
+ * @param {string} status - Job status
+ * @returns {string} - Bootstrap color class
+ */
+function getStatusColor(status) {
+    switch (status) {
+        case 'pending': return 'secondary';
+        case 'running': return 'primary';
+        case 'completed': return 'success';
+        case 'failed': return 'danger';
+        case 'confirmation_required': return 'warning';
+        default: return 'secondary';
+    }
+}
+
+/**
+ * Generate pagination HTML
+ * @param {Object} pagination - Pagination info
+ * @returns {string} - HTML for pagination controls
+ */
+function generatePaginationHtml(pagination) {
+    const pages = [];
+    
+    // Previous button
+    if (pagination.has_prev) {
+        pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${pagination.page - 1}); return false;">&laquo;</a></li>`);
+    } else {
+        pages.push(`<li class="page-item disabled"><span class="page-link">&laquo;</span></li>`);
+    }
+
+    // Page numbers
+    const start = Math.max(1, pagination.page - 2);
+    const end = Math.min(pagination.pages, pagination.page + 2);
+    
+    if (start > 1) {
+        pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(1); return false;">1</a></li>`);
+        if (start > 2) {
+            pages.push(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+        }
+    }
+    
+    for (let i = start; i <= end; i++) {
+        if (i === pagination.page) {
+            pages.push(`<li class="page-item active"><span class="page-link">${i}</span></li>`);
+        } else {
+            pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`);
+        }
+    }
+    
+    if (end < pagination.pages) {
+        if (end < pagination.pages - 1) {
+            pages.push(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
+        }
+        pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${pagination.pages}); return false;">${pagination.pages}</a></li>`);
+    }
+
+    // Next button
+    if (pagination.has_next) {
+        pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${pagination.page + 1}); return false;">&raquo;</a></li>`);
+    } else {
+        pages.push(`<li class="page-item disabled"><span class="page-link">&raquo;</span></li>`);
+    }
+
+    return pages.join('');
+}
+
+/**
+ * Change results page
+ * @param {number} page - Page number
+ */
+async function changePage(page) {
+    currentPage = page;
+    
+    try {
+        const response = await fetchWithRetry(`/api/jobs/${currentJobId}?page=${page}`, {
+            timeout: 10000
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch page ${page}`);
+        }
+        
+        const data = await response.json();
+        if (data.results) {
+            displayResults(data.results, data.pagination);
+            
+            // Scroll to results
+            document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+    } catch (error) {
+        showError(`Error loading page ${page}: ${error.message}`);
+    }
+}
+
+/**
+ * Show error message
+ * @param {string} message - Error message
+ * @param {string} type - Alert type (danger, warning, etc.)
+ */
+function showError(message, type = 'danger') {
+    const alertContainer = document.getElementById('alertContainer');
+    
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        <strong>${type === 'danger' ? 'Error:' : 'Notice:'}</strong> ${escapeHtml(message)}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    
+    alertContainer.appendChild(alertDiv);
+    
+    // Auto-dismiss after 10 seconds
+    setTimeout(() => {
+        const alert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+        if (alert) alert.close();
+    }, 10000);
+    
+    // Scroll to error
+    alertContainer.scrollIntoView({ behavior: 'smooth' });
+}
+
+/**
+ * Clear all alerts
+ */
+function clearAlerts() {
+    const alertContainer = document.getElementById('alertContainer');
+    alertContainer.innerHTML = '';
+}
+
+/**
+ * Format currency value
+ * @param {number} value - Value to format
+ * @returns {string} - Formatted currency string
+ */
+function formatCurrency(value) {
+    return parseFloat(value).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+/**
+ * Escape HTML special characters
+ * @param {string} str - String to escape
+ * @returns {string} - Escaped string
+ */
+function escapeHtml(str) {
+    if (!str) return '';
+    
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+/**
+ * Respond to match confirmation
+ * @param {boolean} confirmed - Whether match is confirmed
+ */
+async function respondToMatch(confirmed) {
+    const confirmationId = document.getElementById('matchConfirmModal').getAttribute('data-confirmation-id');
+    
+    try {
+        // Show loading state in modal
+        const modalBody = document.querySelector('#matchConfirmModal .modal-body');
+        const originalContent = modalBody.innerHTML;
+        modalBody.innerHTML = `
+            <div class="text-center py-3">
+                <div class="spinner-border text-primary mb-3" role="status"></div>
+                <p>Submitting response...</p>
+            </div>
+        `;
+        
+        const response = await fetchWithRetry(`/api/jobs/${currentJobId}/confirm`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                confirmation: confirmed ? 'yes' : 'no',
+                session_id: currentSessionId,
+                confirmation_id: confirmationId
+            }),
+            timeout: 15000
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Request failed with status ${response.status}`);
+        }
+
+        // Hide match modal
+        matchModal.hide();
+        
+        // Show loading modal again
+        showLoadingModal('Processing your confirmation...', 'Continuing property search');
+        
+        // Resume polling after confirmation
+        pollJobStatus();
+    } catch (error) {
+        console.error('Error confirming match:', error);
+        showError('Error confirming match: ' + error.message);
+        
+        // Restore modal content and leave it open to try again
+        const modalBody = document.querySelector('#matchConfirmModal .modal-body');
+        modalBody.innerHTML = originalContent;
+    }
+}
+</script>
+{% endblock %}
