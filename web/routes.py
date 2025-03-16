@@ -98,6 +98,72 @@ def index():
                              error="Unable to load locations. Please try again later.",
                              locales={'davidson-tn': 'Nashville/Davidson County, TN'})
 
+@bp.route('/api/jobs/<int:job_id>/status', methods=['GET'])
+def get_job_status(job_id):
+    """Get job status and handle confirmation directly from DB and API logs"""
+    try:
+        job = ScrapingJob.query.get_or_404(job_id)
+
+        # First, check if there are any pending confirmations in our database
+        pending_confirmation = ScrapingConfirmation.query.filter_by(
+            job_id=job_id,
+            response=None
+        ).order_by(ScrapingConfirmation.created_at.desc()).first()
+
+        # If pending confirmation exists, return it
+        if pending_confirmation:
+            logger.info(f"Found pending confirmation in database for job {job_id}")
+            return jsonify({
+                'status': 'confirmation_required',
+                'owner': pending_confirmation.owner_name,
+                'match': pending_confirmation.matched_name,
+                'confirmation_id': pending_confirmation.id
+            })
+
+        # If job is already in confirmation_required state, check API directly
+        api_url = f"{current_app.config['SCRAPPY_API_URL']}/files/{job.session_id}"
+
+        # This special parameter tells the API we want status info too
+        response = requests.get(f"{api_url}?include_status=true", timeout=5)
+
+        if response.ok:
+            data = response.json()
+
+            # If API response has confirmation_required status, create a local record
+            if data.get('status') == 'confirmation_required':
+                logger.info(f"API reports confirmation_required for job {job_id}, creating local record")
+
+                # Update job status
+                job.status = 'confirmation_required'
+
+                # Create confirmation record
+                confirmation = ScrapingConfirmation(
+                    id=data.get('confirmation_id', str(uuid.uuid4())),
+                    job_id=job.id,
+                    session_id=job.session_id,
+                    owner_name=data.get('owner', ''),
+                    matched_name=data.get('match', '')
+                )
+                db.session.add(confirmation)
+                db.session.commit()
+
+                return jsonify({
+                    'status': 'confirmation_required',
+                    'owner': data.get('owner'),
+                    'match': data.get('match'),
+                    'confirmation_id': data.get('confirmation_id')
+                })
+
+        # If no confirmation needed, return current job status
+        return jsonify({
+            'status': job.status,
+            'message': 'Current job status',
+        })
+
+    except Exception as e:
+        logger.error(f"Error checking job status: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+    
 @bp.route('/api/jobs/<int:job_id>', methods=['GET'])
 def get_job(job_id):
     """Get job status and results"""
@@ -162,8 +228,22 @@ def confirm_match(job_id):
 
     try:
         job = ScrapingJob.query.get_or_404(job_id)
+
+        # Log the confirmation attempt
+        confirmation_id = data.get('confirmation_id')
+        logger.info(f"Received confirmation {data['confirmation']} for job {job_id}, confirmation ID: {confirmation_id}")
+
+        # Store confirmation in our database first
+        if confirmation_id:
+            confirmation = ScrapingConfirmation.query.filter_by(id=confirmation_id).first()
+            if confirmation:
+                confirmation.response = data['confirmation']
+                db.session.commit()
+                logger.info(f"Updated local confirmation record {confirmation_id} with response: {data['confirmation']}")
+
+        # Send confirmation to Scrappy API
         if ScrappyService.send_confirmation(job.id, job.session_id, data['confirmation']):
-            return jsonify({'message': 'Confirmation sent'})
+            return jsonify({'message': 'Confirmation sent', 'status': 'success'})
         return jsonify({'error': 'Failed to send confirmation'}), 500
     except Exception as e:
         logger.error(f"Error confirming match: {e}", exc_info=True)

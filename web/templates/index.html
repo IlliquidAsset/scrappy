@@ -1,96 +1,115 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div id="alertContainer"></div>
+<div class="container-fluid">
+    <div id="alertContainer"></div>
 
-        {% if error %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ error }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endif %}
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
 
-        <div class="card">
-            <div class="card-body">
-                <ul class="nav nav-tabs mb-4" role="tablist">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#owners" type="button">Owner Names</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addresses" type="button">Addresses</button>
-                    </li>
-                </ul>
+    <!-- Top row: Search Form and Debug Log side by side -->
+    <div class="row mb-4">
+        <!-- Search Form -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <ul class="nav nav-tabs mb-3" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#owners" type="button">Owner Names</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#addresses" type="button">Addresses</button>
+                        </li>
+                    </ul>
 
-                <div class="tab-content">
-                    <!-- Owner Names Tab -->
-                    <div class="tab-pane fade show active" id="owners">
-                        <form id="ownerForm" onsubmit="submitForm(event)">
-                            <div class="mb-3">
-                                <label for="ownerNames" class="form-label">Enter Owner Names</label>
-                                <textarea class="form-control" id="ownerNames" name="owners" rows="5" 
-                                    placeholder="Enter each owner name on a new line" required>{{ form_data.owners if form_data else '' }}</textarea>
-                                <div class="form-text">Enter multiple owner names, one per line.</div>
+                    <div class="tab-content">
+                        <!-- Owner Names Tab -->
+                        <div class="tab-pane fade show active" id="owners">
+                            <form id="ownerForm" onsubmit="submitForm(event)">
+                                <div class="mb-3">
+                                    <label for="locale" class="form-label">Select Location</label>
+                                    <select class="form-select" id="locale" name="locale" required>
+                                        <option value="">-- Select a location --</option>
+                                        {% for code, name in locales.items() %}
+                                        <option value="{{ code }}" {% if form_data and form_data.locale == code %}selected{% endif %}>{{ name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ownerNames" class="form-label">Enter Owner Names</label>
+                                    <textarea class="form-control" id="ownerNames" name="owners" rows="5"
+                                        placeholder="Enter each owner name on a new line" required>{{ form_data.owners if form_data else '' }}</textarea>
+                                    <div class="form-text">Enter multiple owner names, one per line.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taxYear" class="form-label">Tax Year</label>
+                                    <input type="text" class="form-control" id="taxYear" name="tax_year"
+                                        value="{% if form_data %}{{ form_data.tax_year }}{% else %}2024{% endif %}"
+                                        pattern="[0-9]{4}" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="submitButton">
+                                    Search Properties
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Addresses Tab -->
+                        <div class="tab-pane fade" id="addresses">
+                            <div class="text-center py-5">
+                                <h5>Address Search Coming Soon!</h5>
+                                <p class="text-muted">This feature will allow you to search properties by address.</p>
                             </div>
-                            <div class="mb-3">
-                                <label for="locale" class="form-label">Select Location</label>
-                                <select class="form-select" id="locale" name="locale" required>
-                                    <option value="">-- Select a location --</option>
-                                    {% for code, name in locales.items() %}
-                                    <option value="{{ code }}" {% if form_data and form_data.locale == code %}selected{% endif %}>{{ name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="taxYear" class="form-label">Tax Year</label>
-                                <input type="text" class="form-control" id="taxYear" name="tax_year" 
-                                    value="{% if form_data %}{{ form_data.tax_year }}{% else %}2024{% endif %}"
-                                    pattern="[0-9]{4}" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="submitButton">
-                                Search Properties
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Addresses Tab -->
-                    <div class="tab-pane fade" id="addresses">
-                        <div class="text-center py-5">
-                            <h5>Address Search Coming Soon!</h5>
-                            <p class="text-muted">This feature will allow you to search properties by address.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Results Container -->
-<div id="resultsContainer" class="row mt-4" style="display: none;">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0">Search Results</h5>
-                <div id="jobStatus" class="badge bg-secondary">Pending</div>
+        <!-- Debug Log -->
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">System Log</h5>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="clearDebugLog()">Clear</button>
+                </div>
+                <div class="card-body p-0">
+                    <div id="debugLog" class="p-3 bg-dark text-light" style="height: 300px; overflow-y: auto; font-family: monospace; font-size: 0.85rem;">
+                        <!-- Debug logs will be appended here -->
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div id="results" class="mb-3"></div>
-                <nav id="pagination" class="mb-3" style="display: none;">
-                    <ul class="pagination justify-content-center">
-                        <!-- Pagination will be populated by JavaScript -->
-                    </ul>
-                </nav>
-                <div id="downloadButtons" style="display: none;">
-                    <a href="#" id="downloadExcel" class="btn btn-success me-2">
-                        <i class="bi bi-file-earmark-spreadsheet me-1"></i>
-                        Download Excel
-                    </a>
-                    <a href="#" id="downloadPDFs" class="btn btn-danger">
-                        <i class="bi bi-file-earmark-pdf me-1"></i>
-                        Download PDFs
-                    </a>
+        </div>
+    </div>
+
+    <!-- Bottom row: Results Container (full width) -->
+    <div class="row">
+        <div class="col-12">
+            <div id="resultsContainer" class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Search Results</h5>
+                    <div id="jobStatus" class="badge bg-secondary">Pending</div>
+                </div>
+                <div class="card-body">
+                    <div id="results" class="mb-3"></div>
+                    <nav id="pagination" class="mb-3" style="display: none;">
+                        <ul class="pagination justify-content-center">
+                            <!-- Pagination will be populated by JavaScript -->
+                        </ul>
+                    </nav>
+                    <div id="downloadButtons" style="display: none;">
+                        <a href="#" id="downloadExcel" class="btn btn-success me-2">
+                            <i class="bi bi-file-earmark-spreadsheet me-1"></i>
+                            Download Excel
+                        </a>
+                        <a href="#" id="downloadPDFs" class="btn btn-danger">
+                            <i class="bi bi-file-earmark-pdf me-1"></i>
+                            Download PDFs
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,35 +159,42 @@ let pollTimer = null;
 let currentSessionId = null;
 let requestTimeout = 60000; // 60 seconds timeout for requests
 let maxRetries = 3; // Maximum number of retries for failed requests
+let isPollingSuspended = false; // Flag to control polling
 
 // Initialize modals when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     matchModal = new bootstrap.Modal(document.getElementById('matchConfirmModal'));
     loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+
+    // Hide the results container initially
+    document.getElementById('resultsContainer').style.display = 'none';
+
+    // Initialize the debug log
+    addToDebugLog('System initialized and ready');
 });
 
 /**
  * Submit the search form
  * @param {Event} event - Form submit event
  */
-async function submitForm(event) {
+ async function submitForm(event) {
     event.preventDefault();
-    
+
     // Form validation
     const form = event.target;
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
     }
-    
+
     // Disable submit button and show loading state
     const submitButton = document.getElementById('submitButton');
     submitButton.disabled = true;
     submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
-    
+
     // Show loading modal
     showLoadingModal('Starting property search...', 'Connecting to property database');
-    
+
     // Get form values
     const ownerNames = form.querySelector('#ownerNames').value.split('\n').filter(name => name.trim());
     const locale = form.querySelector('#locale').value;
@@ -178,14 +204,27 @@ async function submitForm(event) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';
     document.getElementById('downloadButtons').style.display = 'none';
-    
+
+    // Reset polling state
+    isPollingSuspended = false;
+    if (pollTimer) {
+        clearTimeout(pollTimer);
+        pollTimer = null;
+    }
+
+    // Stop any existing confirmation monitoring
+    stopConfirmationMonitoring();
+
     // Clear any existing alerts
     clearAlerts();
+
+    // Add to debug log
+    addToDebugLog(`Starting search for ${ownerNames.length} owner(s) in ${locale} for tax year ${taxYear}`);
 
     try {
         // Generate a unique session ID
         currentSessionId = uuidv4();
-        
+
         // Create the job through our backend
         const response = await fetchWithTimeout('/scrape', {
             method: 'POST',
@@ -205,29 +244,81 @@ async function submitForm(event) {
         }
 
         const data = await response.json();
+        addToDebugLog(`Server response: ${JSON.stringify(data)}`);
+
         if (data.status === 'success') {
             currentJobId = data.job_id;
             currentPage = 1;
-            
+
             // Update loading modal
             updateLoadingModal('Searching property records...', 'This may take a few moments');
-            
+
             // Show results container
             showResults();
-            
+
             // Start polling for job status
             pollJobStatus();
+
+            // Start monitoring for confirmation - THIS IS THE NEW LINE
+            startConfirmationMonitoring(currentJobId, currentSessionId);
         } else {
             throw new Error('Failed to create job: ' + (data.error || 'Unknown error'));
         }
     } catch (error) {
         hideLoadingModal();
         showError('Error: ' + error.message);
+        addToDebugLog(`ERROR: ${error.message}`, 'error');
     } finally {
         // Re-enable submit button
         submitButton.disabled = false;
         submitButton.innerHTML = 'Search Properties';
     }
+}
+
+/**
+ * Add message to debug log
+ * @param {string} message - Message to add
+ * @param {string} level - Log level (info, warning, error)
+ */
+function addToDebugLog(message, level = 'info') {
+    const debugLog = document.getElementById('debugLog');
+    const timestamp = new Date().toLocaleTimeString();
+
+    // Create log entry with proper styling
+    const logEntry = document.createElement('div');
+    logEntry.className = `log-entry log-${level}`;
+
+    let style = '';
+    switch (level) {
+        case 'error':
+            style = 'color: #ff5252;';
+            break;
+        case 'warning':
+            style = 'color: #ffd740;';
+            break;
+        case 'success':
+            style = 'color: #69f0ae;';
+            break;
+        default:
+            style = 'color: #ffffff;';
+    }
+
+    logEntry.innerHTML = `<span style="color: #8c9eff;">[${timestamp}]</span> <span style="${style}">${message}</span>`;
+
+    // Append to log
+    debugLog.appendChild(logEntry);
+
+    // Scroll to bottom
+    debugLog.scrollTop = debugLog.scrollHeight;
+}
+
+/**
+ * Clear debug log
+ */
+function clearDebugLog() {
+    const debugLog = document.getElementById('debugLog');
+    debugLog.innerHTML = '';
+    addToDebugLog('Log cleared');
 }
 
 /**
@@ -238,10 +329,10 @@ async function submitForm(event) {
  */
 async function fetchWithTimeout(url, options = {}) {
     const { timeout = 10000 } = options;
-    
+
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    
+
     try {
         const response = await fetch(url, {
             ...options,
@@ -270,11 +361,11 @@ async function fetchWithRetry(url, options = {}, retries = maxRetries) {
         return await fetchWithTimeout(url, options);
     } catch (error) {
         if (retries === 0) throw error;
-        
+
         // Exponential backoff
         const delay = 1000 * Math.pow(2, maxRetries - retries);
-        console.log(`Retrying after ${delay}ms (${retries} retries left)`);
-        
+        addToDebugLog(`Retrying after ${delay}ms (${retries} retries left)`, 'warning');
+
         await new Promise(resolve => setTimeout(resolve, delay));
         return fetchWithRetry(url, options, retries - 1);
     }
@@ -283,9 +374,16 @@ async function fetchWithRetry(url, options = {}, retries = maxRetries) {
 /**
  * Poll for job status
  */
-async function pollJobStatus() {
+ async function pollJobStatus() {
     if (pollTimer) {
         clearTimeout(pollTimer);
+        pollTimer = null;
+    }
+
+    // Don't poll if polling is suspended (e.g., waiting for user confirmation)
+    if (isPollingSuspended) {
+        addToDebugLog('Polling suspended - waiting for user action');
+        return;
     }
 
     const statusBadge = document.getElementById('jobStatus');
@@ -296,13 +394,18 @@ async function pollJobStatus() {
         const response = await fetchWithRetry(`/api/jobs/${currentJobId}?page=${currentPage}`, {
             timeout: 10000
         });
-        
+
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error || `Request failed with status ${response.status}`);
         }
-        
+
         const data = await response.json();
+
+        // Only log status changes to reduce log noise
+        if (statusBadge.textContent.toLowerCase() !== data.status.toLowerCase()) {
+            addToDebugLog(`Job status changed to: ${data.status}`);
+        }
 
         // Update status badge
         const status = (data.status || '').toLowerCase();
@@ -312,8 +415,18 @@ async function pollJobStatus() {
         // Handle confirmation if needed
         if (status === 'confirmation_required') {
             hideLoadingModal();
+            isPollingSuspended = true; // Suspend polling while waiting for confirmation
+
             if (data.owner && data.match) {
-                await handleMatchConfirmation(data.owner, data.match, data.confirmation_id);
+                addToDebugLog(`Confirmation required: "${data.owner}" matches "${data.match}"?`, 'warning');
+                try {
+                    await handleMatchConfirmation(data.owner, data.match, data.confirmation_id);
+                    addToDebugLog(`Confirmation dialog displayed`);
+                } catch (error) {
+                    addToDebugLog(`Error displaying confirmation: ${error}`, 'error');
+                }
+            } else {
+                addToDebugLog(`Confirmation required but missing owner/match data`, 'error');
             }
             return;
         }
@@ -325,6 +438,7 @@ async function pollJobStatus() {
             if (status === 'completed') {
                 downloadButtons.style.display = 'block';
                 setupDownloadButtons(currentJobId);
+                addToDebugLog(`Job completed with ${data.results.length} results`, 'success');
             }
         }
 
@@ -333,6 +447,7 @@ async function pollJobStatus() {
             hideLoadingModal();
             if (!data.results || data.results.length === 0) {
                 resultsDiv.innerHTML = '<div class="alert alert-info">No properties found matching your search criteria.</div>';
+                addToDebugLog('No properties found matching the search criteria', 'warning');
             }
             return; // Stop polling
         }
@@ -340,21 +455,23 @@ async function pollJobStatus() {
         if (status === 'failed') {
             hideLoadingModal();
             showError(data.error_message || 'Job failed');
+            addToDebugLog(`Job failed: ${data.error_message || 'Unknown error'}`, 'error');
             downloadButtons.style.display = 'none';
             return; // Stop polling
         }
 
         // Show processing message if no results yet
-        if (!document.getElementById('matchConfirmModal').classList.contains('show') && 
+        if (!document.getElementById('matchConfirmModal').classList.contains('show') &&
             (!data.results || data.results.length === 0)) {
             resultsDiv.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div><p class="mt-2">Processing your request...</p></div>';
         }
 
-        // Continue polling
-        pollTimer = setTimeout(pollJobStatus, 2000);
+        // Continue polling with a longer interval (5 seconds instead of 2)
+        pollTimer = setTimeout(pollJobStatus, 5000);
     } catch (error) {
         hideLoadingModal();
         showError('Error checking job status: ' + error.message);
+        addToDebugLog(`Error checking job status: ${error.message}`, 'error');
     }
 }
 
@@ -493,7 +610,7 @@ function getStatusColor(status) {
  */
 function generatePaginationHtml(pagination) {
     const pages = [];
-    
+
     // Previous button
     if (pagination.has_prev) {
         pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${pagination.page - 1}); return false;">&laquo;</a></li>`);
@@ -504,14 +621,14 @@ function generatePaginationHtml(pagination) {
     // Page numbers
     const start = Math.max(1, pagination.page - 2);
     const end = Math.min(pagination.pages, pagination.page + 2);
-    
+
     if (start > 1) {
         pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(1); return false;">1</a></li>`);
         if (start > 2) {
             pages.push(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
         }
     }
-    
+
     for (let i = start; i <= end; i++) {
         if (i === pagination.page) {
             pages.push(`<li class="page-item active"><span class="page-link">${i}</span></li>`);
@@ -519,7 +636,7 @@ function generatePaginationHtml(pagination) {
             pages.push(`<li class="page-item"><a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a></li>`);
         }
     }
-    
+
     if (end < pagination.pages) {
         if (end < pagination.pages - 1) {
             pages.push(`<li class="page-item disabled"><span class="page-link">...</span></li>`);
@@ -543,25 +660,26 @@ function generatePaginationHtml(pagination) {
  */
 async function changePage(page) {
     currentPage = page;
-    
+
     try {
         const response = await fetchWithRetry(`/api/jobs/${currentJobId}?page=${page}`, {
             timeout: 10000
         });
-        
+
         if (!response.ok) {
             throw new Error(`Failed to fetch page ${page}`);
         }
-        
+
         const data = await response.json();
         if (data.results) {
             displayResults(data.results, data.pagination);
-            
+
             // Scroll to results
             document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
         }
     } catch (error) {
         showError(`Error loading page ${page}: ${error.message}`);
+        addToDebugLog(`Error loading page ${page}: ${error.message}`, 'error');
     }
 }
 
@@ -572,22 +690,22 @@ async function changePage(page) {
  */
 function showError(message, type = 'danger') {
     const alertContainer = document.getElementById('alertContainer');
-    
+
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
     alertDiv.innerHTML = `
         <strong>${type === 'danger' ? 'Error:' : 'Notice:'}</strong> ${escapeHtml(message)}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
-    
+
     alertContainer.appendChild(alertDiv);
-    
+
     // Auto-dismiss after 10 seconds
     setTimeout(() => {
         const alert = bootstrap.Alert.getOrCreateInstance(alertDiv);
         if (alert) alert.close();
     }, 10000);
-    
+
     // Scroll to error
     alertContainer.scrollIntoView({ behavior: 'smooth' });
 }
@@ -619,7 +737,7 @@ function formatCurrency(value) {
  */
 function escapeHtml(str) {
     if (!str) return '';
-    
+
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
@@ -631,7 +749,7 @@ function escapeHtml(str) {
  */
 async function respondToMatch(confirmed) {
     const confirmationId = document.getElementById('matchConfirmModal').getAttribute('data-confirmation-id');
-    
+
     try {
         // Show loading state in modal
         const modalBody = document.querySelector('#matchConfirmModal .modal-body');
@@ -642,7 +760,9 @@ async function respondToMatch(confirmed) {
                 <p>Submitting response...</p>
             </div>
         `;
-        
+
+        addToDebugLog(`Sending ${confirmed ? 'YES' : 'NO'} confirmation response`, confirmed ? 'success' : 'warning');
+
         const response = await fetchWithRetry(`/api/jobs/${currentJobId}/confirm`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -661,20 +781,103 @@ async function respondToMatch(confirmed) {
 
         // Hide match modal
         matchModal.hide();
-        
+
         // Show loading modal again
         showLoadingModal('Processing your confirmation...', 'Continuing property search');
-        
+
         // Resume polling after confirmation
+        isPollingSuspended = false;
         pollJobStatus();
     } catch (error) {
         console.error('Error confirming match:', error);
         showError('Error confirming match: ' + error.message);
-        
+        addToDebugLog(`Error confirming match: ${error.message}`, 'error');
+
         // Restore modal content and leave it open to try again
         const modalBody = document.querySelector('#matchConfirmModal .modal-body');
         modalBody.innerHTML = originalContent;
     }
 }
+// Regularly check for confirmation separately from main polling
+let confirmationMonitorInterval = null;
+
+/**
+ * Directly monitor for job confirmation requests
+ */
+async function monitorForConfirmation(jobId, sessionId) {
+    if (!jobId) return;
+
+    try {
+        // Make direct request to our local confirmation check endpoint
+        const response = await fetch(`/api/jobs/${jobId}/status`);
+        if (!response.ok) {
+            console.error('Failed to check confirmation status');
+            return;
+        }
+
+        const data = await response.json();
+
+        // Check if confirmation is required
+        if (data.status === 'confirmation_required') {
+            // Update UI status badge
+            const statusBadge = document.getElementById('jobStatus');
+            statusBadge.textContent = 'Confirmation Required';
+            statusBadge.className = 'badge bg-warning';
+
+            // Log in debug pane
+            addToDebugLog(`Confirmation required: "${data.owner}" matches "${data.match}"?`, 'warning');
+
+            // Suspend polling
+            isPollingSuspended = true;
+
+            // Show confirmation dialog
+            await handleMatchConfirmation(data.owner, data.match, data.confirmation_id);
+
+            // Hide loading dialog if showing
+            hideLoadingModal();
+
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        console.error('Error monitoring for confirmation:', error);
+        return false;
+    }
+}
+
+/**
+ * Start confirmation monitoring
+ */
+function startConfirmationMonitoring(jobId, sessionId) {
+    // Clear any existing interval
+    if (confirmationMonitorInterval) {
+        clearInterval(confirmationMonitorInterval);
+    }
+
+    // First immediate check
+    monitorForConfirmation(jobId, sessionId);
+
+    // Then set interval for regular checks (every 3 seconds)
+    confirmationMonitorInterval = setInterval(() => {
+        monitorForConfirmation(jobId, sessionId);
+    }, 3000);
+
+    addToDebugLog("Started confirmation monitoring");
+}
+
+/**
+ * Stop confirmation monitoring
+ */
+function stopConfirmationMonitoring() {
+    if (confirmationMonitorInterval) {
+        clearInterval(confirmationMonitorInterval);
+        confirmationMonitorInterval = null;
+        addToDebugLog("Stopped confirmation monitoring");
+    }
+}
+
+// Modify submitForm to include this line after starting pollJobStatus:
+// startConfirmationMonitoring(currentJobId, currentSessionId);
 </script>
 {% endblock %}
