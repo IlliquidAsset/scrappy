@@ -22,32 +22,39 @@ Session = sessionmaker(bind=engine)
 class Confirmation(Base):
     """Model for storing confirmation data"""
     __tablename__ = 'confirmations'
-    
+
     id = Column(String(36), primary_key=True)
     session_id = Column(String(36), nullable=False, index=True)
     owner = Column(String(255), nullable=False)
     match = Column(String(255), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     response = Column(String(3), nullable=True)
-    
+
 def create_db():
     """Create database tables if they don't exist"""
     Base.metadata.create_all(engine)
 
 def ask_confirmation(match, current_owner):
     """
-    Handle confirmation in both API and CLI contexts using database storage
-    instead of environment variables.
+    Handle confirmation in both API and CLI contexts.
+    Shows a nicely formatted prompt in CLI mode.
+
+    Args:
+        match (str): The matched property owner name
+        current_owner (str): The input owner name to match against
+
+    Returns:
+        bool: True if confirmed, False otherwise
     """
     create_db()  # Ensure tables exist
-    
+
     # Check for external confirmation mode
     external_mode = os.environ.get("SCRAPPY_EXTERNAL_CONFIRMATION", "false").lower() == "true"
-    
+
     # Generate a unique ID for this confirmation
     confirmation_id = str(uuid.uuid4())
     session_id = os.environ.get("SCRAPPY_SESSION_ID", "default")
-    
+
     # Create a database record for this confirmation
     with Session() as session:
         confirmation = Confirmation(
@@ -59,7 +66,7 @@ def ask_confirmation(match, current_owner):
         )
         session.add(confirmation)
         session.commit()
-    
+
     if external_mode:
         # API mode - emit JSON response and wait for confirmation via database
         response = {
@@ -70,23 +77,23 @@ def ask_confirmation(match, current_owner):
             "session_id": session_id
         }
         print(json.dumps(response), flush=True)
-        
+
         # Poll database for response
         max_wait_time = 300  # 5 minutes timeout
         start_time = time.time()
-        
+
         while time.time() - start_time < max_wait_time:
             with Session() as session:
                 result = session.query(Confirmation).filter_by(id=confirmation_id).first()
                 if result and result.response:
                     return result.response == "yes"
             time.sleep(0.5)
-        
+
         # Timeout - log and return False
         logger.warning(f"Confirmation timed out after {max_wait_time} seconds")
         return False
     else:
-        # CLI mode - interactive confirmation
+        # CLI mode - interactive confirmation with improved formatting
         while True:
             response = input(f"Does {colored(current_owner, 'yellow')} match {colored(match, 'yellow')}? (y/n): ").strip().lower()
             if response in ["y", "n"]:
@@ -97,5 +104,5 @@ def ask_confirmation(match, current_owner):
                         result.response = "yes" if response == "y" else "no"
                         session.commit()
                 return response == "y"
-            
+
             print("Invalid input. Please enter 'y' for yes or 'n' for no.")

@@ -35,3 +35,31 @@
 2025-03-16 01:10:14 - scrappy.api - INFO - [v1.0.0] Received scrape request
 2025-03-16 01:10:14 - scrappy.api - INFO - Using session ID: 9d637040-5ad2-49bd-8157-2ec3ad747708
 2025-03-16 01:10:14 - scrappy.api - INFO - Starting background scraping for session 9d637040-5ad2-49bd-8157-2ec3ad747708
+2025-03-16 01:15:21 - scrappy.api - ERROR - Error in background scraping task for session 9d637040-5ad2-49bd-8157-2ec3ad747708: [Errno 32] Broken pipe
+Traceback (most recent call last):
+  File "/workspaces/scrappy/app.py", line 164, in process_scraping
+    results = await asyncio.to_thread(
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python/3.12.1/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/scrappy/core/scrapers/property_scraper.py", line 66, in scrape_property_data
+    scrape_owner_data(session, owner_name, base_url, tax_year, confirmed_matches, results, locale)
+  File "/workspaces/scrappy/core/scrapers/property_scraper.py", line 104, in scrape_owner_data
+    if not process_table_rows(soup, table, owner_name, confirmed_matches, results, seen_accounts, locale):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/scrappy/core/scrapers/property_scraper.py", line 142, in process_table_rows
+    new_results += process_table_row(row, owner_name, confirmed_matches, results, seen_accounts, locale)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/scrappy/core/scrapers/property_scraper.py", line 174, in process_table_row
+    if confirm_match(owner_name, owner, confirmed_matches):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/scrappy/core/scrapers/property_scraper.py", line 42, in confirm_match
+    return ask_confirmation(matched_name, input_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/scrappy/core/utils/confirmation.py", line 72, in ask_confirmation
+    print(json.dumps(response), flush=True)
+BrokenPipeError: [Errno 32] Broken pipe

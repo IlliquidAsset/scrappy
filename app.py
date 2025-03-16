@@ -66,7 +66,7 @@ class ConfirmationRequest(BaseModel):
         if v not in ['yes', 'no']:
             raise ValueError("Confirmation must be 'yes' or 'no'")
         return v
-    
+
 @app.get("/")
 async def root():
     return {
@@ -92,6 +92,23 @@ async def get_locales():
             for locale, data in SUPPORTED_LOCALES.items()
         }
     }
+
+@app.get("/logs/{session_id}")
+async def get_logs(session_id: str, since: Optional[str] = None, limit: int = 100):
+    """Get logs for a specific session, optionally filtering by timestamp"""
+    try:
+        from core.utils.session_logger import get_session_logs
+
+        logs = get_session_logs(session_id, since=since, limit=limit)
+        return {
+            "status": "success",
+            "session_id": session_id,
+            "logs": logs,
+            "count": len(logs)
+        }
+    except Exception as e:
+        logger.error(f"Error retrieving logs for session {session_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error retrieving logs: {str(e)}")
 
 @app.post("/confirm")
 async def confirm(request: ConfirmationRequest):

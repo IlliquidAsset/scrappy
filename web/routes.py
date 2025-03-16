@@ -163,6 +163,27 @@ def get_job_status(job_id):
     except Exception as e:
         logger.error(f"Error checking job status: {e}", exc_info=True)
         return jsonify({'error': str(e)}), 500
+
+@bp.route('/api/logs/<session_id>')
+def get_session_logs_route(session_id):
+    """Proxy logs from the API to the frontend"""
+    try:
+        since = request.args.get('since')
+        limit = request.args.get('limit', 100, type=int)
+
+        api_url = f"{current_app.config['SCRAPPY_API_URL']}/logs/{session_id}"
+        params = {}
+        if since:
+            params['since'] = since
+        if limit:
+            params['limit'] = limit
+
+        response = requests.get(api_url, params=params, timeout=5)
+        response.raise_for_status()
+        return jsonify(response.json())
+    except Exception as e:
+        logger.error(f"Error fetching logs: {e}", exc_info=True)
+        return jsonify({"error": str(e), "status": "error"}), 500
     
 @bp.route('/api/jobs/<int:job_id>', methods=['GET'])
 def get_job(job_id):

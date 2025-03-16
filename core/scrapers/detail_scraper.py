@@ -30,17 +30,17 @@ def retry(max_attempts=3, delay=1):
 def scrape_details(link):
     """
     Scrape detailed property information from a property page.
-    
+
     Args:
         link (str): URL to the property details page
-        
+
     Returns:
         dict: Detailed property information
     """
     if not link:
         logger.warning("No link provided for detail scraping")
         return {}
-    
+
     try:
         response = requests.get(link, timeout=10)
         if response.status_code == 200:
@@ -53,12 +53,12 @@ def scrape_details(link):
                     if not element:
                         logger.debug(f"Label '{label}' not found in {link}")
                         return ""
-                    
+
                     value_element = element.find_next("td")
                     if not value_element:
                         logger.debug(f"Value for '{label}' not found in {link}")
                         return ""
-                    
+
                     return value_element.text.strip()
                 except AttributeError as e:
                     logger.warning(f"Error finding '{label}' in {link}: {e}")
@@ -71,23 +71,23 @@ def scrape_details(link):
             personal_property_value = safe_find("Personal Property Value:")
             taxable_property = safe_find("Taxable Property:").replace("x", "").strip()
             tax_rate = safe_find("2024 Tax Rate:")
-            
+
             # Convert values to numbers where appropriate
             try:
                 improvement_value_float = float(improvement_value.replace('$', '').replace(',', ''))
             except (ValueError, AttributeError):
                 improvement_value_float = 0
-                
+
             try:
                 land_value_float = float(land_value.replace('$', '').replace(',', ''))
             except (ValueError, AttributeError):
                 land_value_float = 0
-                
+
             try:
                 personal_property_value_float = float(personal_property_value.replace('$', '').replace(',', ''))
             except (ValueError, AttributeError):
                 personal_property_value_float = 0
-            
+
             # Calculate total value
             total_value = improvement_value_float + land_value_float + personal_property_value_float
 
@@ -106,7 +106,7 @@ def scrape_details(link):
         else:
             logger.error(f"Failed to fetch details from {link}: HTTP {response.status_code}")
             return {}
-            
+
     except requests.RequestException as e:
         logger.error(f"Request error fetching details from {link}: {e}")
         raise
