@@ -162,6 +162,7 @@ async def confirm(request: ConfirmationRequest):
 
 async def process_scraping(session_id: str, owners: str, locale: str, tax_year: str):
     """Background task to process scraping without blocking the API response"""
+    # TODO: Integrate detail_scraper.scrape_details here to enrich property data
     try:
         logger.info(f"Starting background scraping for session {session_id}")
 

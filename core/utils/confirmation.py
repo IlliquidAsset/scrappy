@@ -24,27 +24,30 @@ class Confirmation(Base):
     __tablename__ = 'confirmations'
 
     id = Column(String(36), primary_key=True)
-    session_id = Column(String(36), nullable=False, index=True)
-    owner = Column(String(255), nullable=False)
-    match = Column(String(255), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    response = Column(String(3), nullable=True)
+    session_id = Column(String(36), nullable=False, index=True)  # ID of the scraping session.
+    owner = Column(String(255), nullable=False)  # Original owner name searched for.
+    match = Column(String(255), nullable=False)  # Potential matching owner name found.
+    address = Column(String(255), nullable=True)  # Property address for the potential match, provides context.
+    created_at = Column(DateTime, default=datetime.utcnow)  # Timestamp of when the confirmation was requested.
+    response = Column(String(3), nullable=True)  # User's response ('yes' or 'no').
 
 def create_db():
     """Create database tables if they don't exist"""
     Base.metadata.create_all(engine)
 
-def ask_confirmation(match, current_owner):
+def ask_confirmation(match, current_owner, address):
     """
     Handle confirmation in both API and CLI contexts.
     Shows a nicely formatted prompt in CLI mode.
 
     Args:
-        match (str): The matched property owner name
-        current_owner (str): The input owner name to match against
+        match (str): The matched property owner name found by the scraper.
+        current_owner (str): The input owner name that was being searched for.
+        address (str): The property address associated with the `match`. This is used
+                       to provide context to the user during confirmation.
 
     Returns:
-        bool: True if confirmed, False otherwise
+        bool: True if the user confirms the match, False otherwise (including timeout).
     """
     create_db()  # Ensure tables exist
 
@@ -60,8 +63,9 @@ def ask_confirmation(match, current_owner):
         confirmation = Confirmation(
             id=confirmation_id,
             session_id=session_id,
-            owner=current_owner,
-            match=match,
+            owner=current_owner,  # The name originally searched for.
+            match=match,          # The name found on the site.
+            address=address,      # The address of the property for `match`.
             created_at=datetime.utcnow()
         )
         session.add(confirmation)
@@ -74,6 +78,7 @@ def ask_confirmation(match, current_owner):
             "confirmation_id": confirmation_id,
             "owner": current_owner,
             "match": match,
+            "address": address,  # Address is included in the JSON for API consumers.
             "session_id": session_id
         }
         print(json.dumps(response), flush=True)
@@ -93,9 +98,10 @@ def ask_confirmation(match, current_owner):
         logger.warning(f"Confirmation timed out after {max_wait_time} seconds")
         return False
     else:
-        # CLI mode - interactive confirmation with improved formatting
+        # CLI mode - interactive confirmation with improved formatting.
+        # The address is shown to help the user decide.
         while True:
-            response = input(f"Does {colored(current_owner, 'yellow')} match {colored(match, 'yellow')}? (y/n): ").strip().lower()
+            response = input(f"Does {colored(current_owner, 'yellow')} at {colored(address, 'cyan')} match {colored(match, 'yellow')}? (y/n): ").strip().lower()
             if response in ["y", "n"]:
                 # Update the database record
                 with Session() as session:

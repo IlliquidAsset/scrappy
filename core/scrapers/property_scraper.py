@@ -30,16 +30,31 @@ def rate_limited(max_per_second):
         return wrapper
     return decorator
 
-def confirm_match(input_name, matched_name, confirmed_matches, threshold=80):
-    """Confirm if the matched name is correct based on the input name."""
+def confirm_match(input_name, matched_name, address, confirmed_matches, threshold=80):
+    """
+    Confirm if the matched name is correct based on the input name, using fuzzy matching.
+    Includes property address in the confirmation prompt for better user context.
+
+    Args:
+        input_name (str): The original name provided for searching.
+        matched_name (str): The name found on the property record.
+        address (str): The address of the property associated with matched_name.
+        confirmed_matches (dict): A dictionary to cache confirmation results.
+        threshold (int): The fuzzy match ratio threshold for prompting confirmation.
+
+    Returns:
+        bool: True if the match is confirmed (either directly or by user), False otherwise.
+    """
     normalized_input = normalize_text(input_name)
     normalized_matched = normalize_text(matched_name)
 
     if normalized_input == normalized_matched:
         return True
 
+    # If the names are not an exact match but meet the similarity threshold,
+    # ask the user for confirmation, providing the address for context.
     if partial_ratio(normalized_input, normalized_matched) >= threshold:
-        return ask_confirmation(matched_name, input_name)
+        return ask_confirmation(matched_name, input_name, address)
     
     return False
 
@@ -132,7 +147,11 @@ def handle_response(response, owner_name, page):
 
 def process_table_rows(soup, table, owner_name, confirmed_matches, results, seen_accounts, locale):
     """Process rows from the data table."""
-    rows = table.find_all("tr", class_="odd")
+    # Find the table body (tbody) first, then find all table rows (tr) within it.
+    # This is more robust than searching for specific row classes (e.g., "odd", "even")
+    # and ensures all data rows are captured.
+    tbody = table.find("tbody")
+    rows = tbody.find_all("tr") if tbody else []  # Get all rows if tbody exists
     if not rows:
         logger.info(f"No rows found for {owner_name}. Stopping.")
         return False
@@ -171,7 +190,7 @@ def process_table_row(row, owner_name, confirmed_matches, results, seen_accounts
         pdf_link = f"{SUPPORTED_LOCALES[locale]['url']}/mod.php?mod=propertytax&mode=PDFBill&viewtype=public&bill[]={id_value}&show_ocr=1" if id_value else None
 
         # If there's a match, append it to results
-        if confirm_match(owner_name, owner, confirmed_matches):
+        if confirm_match(owner_name, owner, address, confirmed_matches):
             results.append({
                 "Input Name": owner_name,
                 "Matched Name": owner,

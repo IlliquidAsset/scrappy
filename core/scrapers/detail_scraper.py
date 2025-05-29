@@ -27,15 +27,19 @@ def retry(max_attempts=3, delay=1):
     return decorator
 
 @retry(max_attempts=3)
-def scrape_details(link):
+def scrape_details(link, tax_year):
     """
     Scrape detailed property information from a property page.
 
     Args:
-        link (str): URL to the property details page
+        link (str): URL to the property details page.
+        tax_year (str): The tax year for which to find the tax rate. This is used
+                        to dynamically construct the label for the tax rate
+                        (e.g., "2023 Tax Rate:") as websites often change this label
+                        based on the selected tax year.
 
     Returns:
-        dict: Detailed property information
+        dict: Detailed property information.
     """
     if not link:
         logger.warning("No link provided for detail scraping")
@@ -70,25 +74,30 @@ def scrape_details(link):
             land_value = safe_find("Land Value:")
             personal_property_value = safe_find("Personal Property Value:")
             taxable_property = safe_find("Taxable Property:").replace("x", "").strip()
-            tax_rate = safe_find("2024 Tax Rate:")
+            # Dynamically find the tax rate using the provided tax_year.
+            tax_rate = safe_find(f"{tax_year} Tax Rate:")
 
-            # Convert values to numbers where appropriate
+            # Convert monetary values to numbers where appropriate.
+            # Log a warning and default to 0 if conversion fails, including original value and link for debugging.
             try:
                 improvement_value_float = float(improvement_value.replace('$', '').replace(',', ''))
             except (ValueError, AttributeError):
+                logger.warning(f"Could not convert Improvement Value '{improvement_value}' to float for link {link}. Defaulting to 0.", exc_info=True)
                 improvement_value_float = 0
 
             try:
                 land_value_float = float(land_value.replace('$', '').replace(',', ''))
             except (ValueError, AttributeError):
+                logger.warning(f"Could not convert Land Value '{land_value}' to float for link {link}. Defaulting to 0.", exc_info=True)
                 land_value_float = 0
 
             try:
                 personal_property_value_float = float(personal_property_value.replace('$', '').replace(',', ''))
             except (ValueError, AttributeError):
+                logger.warning(f"Could not convert Personal Property Value '{personal_property_value}' to float for link {link}. Defaulting to 0.", exc_info=True)
                 personal_property_value_float = 0
 
-            # Calculate total value
+            # Calculate total value from the successfully converted float values.
             total_value = improvement_value_float + land_value_float + personal_property_value_float
 
             return {

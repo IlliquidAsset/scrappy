@@ -178,7 +178,7 @@ def main() -> Dict[str, Any]:
             logger.info(f"Processing property {i+1} of {len(property_data)}: {property.get('Matched Name', 'Unknown')}")
             
             # Scrape details
-            details = scrape_details(property["Link"])
+            details = scrape_details(property["Link"], tax_year)
             property.update(details)
             
             # Download PDF
