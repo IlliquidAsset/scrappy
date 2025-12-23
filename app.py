@@ -183,7 +183,7 @@ async def confirm(request: ConfirmationRequest):
         # `ConfirmationSession` is an alias for `sqlalchemy.orm.sessionmaker` bound to the engine.
         # `Confirmation` is the SQLAlchemy model for the 'confirmations' table.
         # These are imported from `core.utils.confirmation`.
-        
+
         logger.info(f"Received confirmation: '{request.confirmation}' for session {request.session_id}, confirmation ID: {request.confirmation_id or 'latest pending'}")
 
         with ConfirmationSession() as db_session: # Start a new database session
@@ -397,10 +397,10 @@ async def get_session_files(session_id: str, page: int = 1, per_page: int = 50):
         # List all files in the PDF directory.
         all_files = [f for f in os.listdir(pdf_folder) if os.path.isfile(os.path.join(pdf_folder, f)) and f.lower().endswith('.pdf')]
         total_files = len(all_files)
-        
+
         # Calculate total pages. Ensures at least 1 page even if no files.
         total_pages = (total_files + per_page - 1) // per_page if total_files > 0 else 1
-        
+
         # Validate and adjust the requested page number to be within valid range.
         page = max(1, min(page, total_pages))
 

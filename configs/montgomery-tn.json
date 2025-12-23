@@ -1,0 +1,48 @@
+{
+  "county_name": "Montgomery County, TN",
+  "locale_code": "montgomery-tn",
+  "website_type": "mygovonline_v1",
+  "search_url": "https://montgomery-tn.mygovonline.com/mod.php?mod=propertytax&mode=public_lookup&action=&title=",
+  "detail_page_base_url": "https://montgomery-tn.mygovonline.com/",
+  "search_request_type": "POST",
+  "search_payload_template": {
+    "selectMenu": "individual",
+    "tax_year": "{tax_year}",
+    "owner_name": "{owner_name}",
+    "page": "{page_number}"
+  },
+  "property_search_results_selectors": {
+    "results_table": "#data",
+    "result_row": "tbody tr",
+    "owner_name": "td:nth-child(2)",
+    "address": "td:nth-child(3)",
+    "account_id": "td:nth-child(4)",
+    "tax_year_display": "td:nth-child(5)",
+    "detail_page_link": "td:last-child a",
+    "next_page_link": "a:contains('Next')"
+  },
+  "property_detail_selectors": {
+    "parcel_id": [
+      {"type": "label", "value": "Parcel:"}
+    ],
+    "improvement_value": [
+      {"type": "label", "value": "Improvement Value:"}
+    ],
+    "land_value": [
+      {"type": "label", "value": "Land Value:"}
+    ],
+    "personal_property_value": [
+      {"type": "label", "value": "Personal Property Value:"}
+    ],
+    "total_appraised_value": [
+      {"type": "label", "value": "Total Appraisal Value:"}
+    ],
+    "taxable_property": [
+      {"type": "label", "value": "Taxable Property:"}
+    ],
+    "tax_rate_label_pattern": "{year} Tax Rate:"
+  },
+  "extraction_hints": {
+    "detail_page_link_attribute": "href"
+  }
+}

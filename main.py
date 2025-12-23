@@ -113,28 +113,39 @@ def select_locale_cli() -> str:
     # Check for environment variable first
     env_locale = os.getenv("SCRAPPY_LOCALE")
     if env_locale and env_locale in SUPPORTED_LOCALES:
+        logger.info(f"Using locale from SCRAPPY_LOCALE environment variable: {env_locale}")
         return env_locale
     
-    locales = {index + 1: locale for index, locale in enumerate(SUPPORTED_LOCALES)}
-    colors = ["green", "blue", "red", "cyan", "magenta"]
+    # Prepare a list of (locale_code, display_name) for selection
+    # Sort by display name for consistent ordering.
+    available_locales = sorted(
+        [(code, data['name']) for code, data in SUPPORTED_LOCALES.items()],
+        key=lambda item: item[1]
+    )
 
-    print("Select a locale:")
-    for num, (key, loc) in enumerate(locales.items(), start=1):
+    cli_options = {index + 1: code for index, (code, _) in enumerate(available_locales)}
+    colors = ["green", "blue", "red", "cyan", "magenta"] # For colored output if termcolor is available
+
+    print("\nSelect a locale:")
+    for num, (code, display_name) in enumerate(available_locales, start=1):
         color = colors[(num - 1) % len(colors)]
         try:
             from termcolor import colored
-            print(f"{colored(num, color)}. {colored(loc, color)} - {SUPPORTED_LOCALES[loc]['name']}")
+            print(f"{colored(str(num), color)}. {colored(display_name, color)}")
         except ImportError:
-            print(f"{num}. {loc} - {SUPPORTED_LOCALES[loc]['name']}")
+            print(f"{num}. {display_name}")
 
     while True:
         try:
-            locale_choice = int(input("Select locale number: "))
-            if locale_choice in locales:
-                return locales[locale_choice]
-            print("Invalid selection. Please choose a valid number.")
+            raw_choice = input("Select locale number: ")
+            locale_choice_num = int(raw_choice)
+            if locale_choice_num in cli_options:
+                selected_locale_code = cli_options[locale_choice_num]
+                logger.info(f"User selected locale: {SUPPORTED_LOCALES[selected_locale_code]['name']}")
+                return selected_locale_code
+            print(f"Invalid selection '{raw_choice}'. Please choose a valid number from the list.")
         except ValueError:
-            print("Please enter a valid number.")
+            print(f"Invalid input '{raw_choice}'. Please enter a number.")
 
 def main() -> Dict[str, Any]:
     """
@@ -152,8 +163,35 @@ def main() -> Dict[str, Any]:
         cleanup_old_sessions(os.path.join(current_dir, 'data', 'outputs'))
         
         # Get locale and tax year
-        locale = os.getenv("SCRAPPY_LOCALE") or select_locale_cli()
-        tax_year = os.getenv("TAX_YEAR") or input("Enter the tax year (default: 2024): ").strip() or "2024"
+        # Dynamically import SUPPORTED_LOCALES here if not already at top level,
+        # to ensure it's fresh if changed during a long-running app (though less relevant for CLI).
+        from core.locales import SUPPORTED_LOCALES
+
+        locale_code = os.getenv("SCRAPPY_LOCALE") or select_locale_cli()
+
+        if not locale_code or locale_code not in SUPPORTED_LOCALES:
+            logger.error(f"Invalid locale code '{locale_code}' selected or no locale provided. Exiting.")
+            return {"error": f"Invalid locale code: {locale_code}"}
+
+        # Load county configuration from JSON file
+        config_details = SUPPORTED_LOCALES[locale_code]
+        config_file_path = config_details['config_path']
+        try:
+            with open(config_file_path, 'r', encoding='utf-8') as f: # Specify UTF-8 encoding
+                county_config = json.load(f)
+            logger.info(f"Successfully loaded configuration for {county_config.get('county_name', locale_code)} from {config_file_path}")
+        except FileNotFoundError:
+            logger.error(f"Configuration file not found: {config_file_path} for locale {locale_code}. Exiting.")
+            return {"error": f"Config file not found for {locale_code}"}
+        except json.JSONDecodeError:
+            logger.error(f"Error decoding JSON from configuration file: {config_file_path}. Exiting.")
+            return {"error": f"Invalid JSON in config for {locale_code}"}
+        except Exception as e:
+            logger.error(f"An unexpected error occurred while loading config file {config_file_path}: {e}", exc_info=True)
+            return {"error": f"Failed to load config for {locale_code}"}
+
+
+        tax_year = os.getenv("TAX_YEAR") or input(f"Enter the tax year for {county_config.get('county_name', locale_code)} (default: 2024): ").strip() or "2024"
 
         # Get input names
         input_names = get_user_input()
@@ -161,13 +199,17 @@ def main() -> Dict[str, Any]:
             logger.error("No owner names provided. Exiting.")
             return {"error": "No owner names provided"}
 
-        logger.info(f"Starting scrape for {len(input_names)} owners in locale {locale} for tax year {tax_year}")
+        logger.info(f"Starting scrape for {len(input_names)} owners in {county_config.get('county_name', locale_code)} for tax year {tax_year}")
         
-        # Scrape and process data
-        property_data = scrape_property_data(input_names, locale=locale, tax_year=tax_year)
+        # Scrape and process data using county_config
+        property_data = scrape_property_data(
+            owner_names=input_names,
+            county_config=county_config,
+            tax_year=tax_year
+        )
         
         if not property_data:
-            logger.warning("No properties found matching the search criteria")
+            logger.warning("No properties found matching the search criteria.")
             return {"property_data": [], "message": "No properties found"}
             
         logger.info(f"Found {len(property_data)} properties")
@@ -175,12 +217,19 @@ def main() -> Dict[str, Any]:
         # Process each property
         for i, property in enumerate(property_data):
             # Log progress
-            logger.info(f"Processing property {i+1} of {len(property_data)}: {property.get('Matched Name', 'Unknown')}")
+            logger.info(f"Processing property {i+1} of {len(property_data)}: Account {property.get('Account', 'N/A')}, Name {property.get('Matched Name', 'Unknown')}")
             
-            # Scrape details
-            details = scrape_details(property["Link"], tax_year)
-            property.update(details)
-            
+            # Scrape details using county_config
+            if property_item.get("Link"): # Ensure there's a link to scrape
+                details = scrape_details(
+                    link=property_item["Link"],
+                    tax_year=tax_year,
+                    county_config=county_config
+                )
+                property_item.update(details)
+            else:
+                logger.warning(f"Skipping detail scrape for property {i+1} due to missing 'Link'. Account: {property.get('Account', 'N/A')}")
+
             # Download PDF
             pdf_filename = f"{property.get('Parcel', 'Unknown').replace('/', '_')}_{property.get('Matched Name', 'Unknown').replace('/', '_')}"
             pdf_path = download_pdf(
